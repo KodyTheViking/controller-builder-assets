@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Controller Builder</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.preview{
+position:relative;
+width:500px;
+margin:auto;
+}
+
+.preview img{
+position:absolute;
+width:100%;
+left:0;
+top:0;
+}
+
+.swatches{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:8px;
+margin:10px;
+}
+
+.swatch{
+width:32px;
+height:32px;
+border-radius:4px;
+cursor:pointer;
+border:2px solid transparent;
+}
+
+.swatch.active{
+border:2px solid white;
+}
+
+select{
+padding:8px;
+margin:10px;
+}
+
+textarea{
+width:100%;
+height:120px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Custom Guitar Controller Builder</h1>
+
+<label>Controller Model</label>
+
+<select id="model">
+<option value="barbarian">Barbarian</option>
+<option value="bard">Bard</option>
+<option value="necromancer">Necromancer</option>
+<option value="paladin">Paladin</option>
+<option value="ranger">Ranger</option>
+</select>
+
+<div class="preview">
+
+<img id="bg">
+<img id="base">
+<img id="inlays">
+<img id="pickguard">
+<img id="hardware">
+
+</div>
+
+<h3>Base Color</h3>
+<div id="baseSwatches" class="swatches"></div>
+
+<h3>Inlays</h3>
+<select id="inlaysSelect"></select>
+
+<h3>Pickguard</h3>
+<div id="pickguardSwatches" class="swatches"></div>
+
+<h3>Your Build</h3>
+
+<textarea id="summary" readonly></textarea>
+
+</div>
+
+<script>
+
+const ROOT="https://raw.githubusercontent.com/KodyTheViking/controller-builder-assets/main/";
+
+const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink"];
+
+const INLAYS=["blocks","dots","hate","none","onesided","piranhabite","sawtooth","sharkbite"];
+
+const PICKGUARDS=[...COLORS,"none"];
+
+const model=document.getElementById("model");
+
+const base=document.getElementById("base");
+const inlays=document.getElementById("inlays");
+const pickguard=document.getElementById("pickguard");
+const hardware=document.getElementById("hardware");
+const bg=document.getElementById("bg");
+
+bg.src=ROOT+"background.png";
+
+COLORS.forEach(color=>{
+
+let sw=document.createElement("div");
+
+sw.className="swatch";
+sw.style.background=color;
+
+sw.onclick=()=>{
+
+document.querySelectorAll("#baseSwatches .swatch").forEach(s=>s.classList.remove("active"));
+sw.classList.add("active");
+
+base.src=ROOT+model.value+"/base/base-"+color+".png";
+
+updateSummary();
+
+};
+
+document.getElementById("baseSwatches").appendChild(sw);
+
+});
+
+INLAYS.forEach(i=>{
+
+let o=document.createElement("option");
+o.value=i;
+o.text=i;
+
+document.getElementById("inlaysSelect").appendChild(o);
+
+});
+
+document.getElementById("inlaysSelect").onchange=()=>{
+
+inlays.src=ROOT+model.value+"/inlays/"+document.getElementById("inlaysSelect").value+".png";
+
+updateSummary();
+
+};
+
+PICKGUARDS.forEach(pg=>{
+
+let sw=document.createElement("div");
+
+sw.className="swatch";
+
+if(pg!=="none") sw.style.background=pg;
+
+sw.onclick=()=>{
+
+document.querySelectorAll("#pickguardSwatches .swatch").forEach(s=>s.classList.remove("active"));
+sw.classList.add("active");
+
+pickguard.src=ROOT+model.value+"/pickguards/"+pg+".png";
+
+updateSummary();
+
+};
+
+document.getElementById("pickguardSwatches").appendChild(sw);
+
+});
+
+function updateSummary(){
+
+let baseColor=document.querySelector("#baseSwatches .active")?.style.background||"";
+let inlay=document.getElementById("inlaysSelect").value;
+let pg=document.querySelector("#pickguardSwatches .active")?.style.background||"none";
+
+document.getElementById("summary").value=
+
+`Model: ${model.value}
+Base: ${baseColor}
+Inlays: ${inlay}
+Pickguard: ${pg}`;
+
+}
+
+</script>
+
+</body>
+</html>
