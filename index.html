@@ -107,6 +107,19 @@ border:2px solid transparent;
 border:2px solid white;
 }
 
+.swatch.rainbow{
+background:linear-gradient(
+90deg,
+red,
+orange,
+yellow,
+green,
+blue,
+indigo,
+violet
+);
+}
+
 /* SUMMARY */
 
 textarea{
@@ -262,7 +275,7 @@ headstocks:null
 };
 
 const COLORS=[
-"black","white","red","orange","yellow","green","blue","purple","pink"
+"black","white","red","orange","yellow","green","blue","purple","pink","cosmic"
 ];
 
 const INLAYS=[
@@ -294,8 +307,13 @@ COLORS.forEach(color=>{
 let sw=document.createElement("div");
 
 sw.className="swatch";
-sw.style.background=color;
 sw.dataset.color=color;
+
+if(color==="cosmic"){
+sw.classList.add("rainbow");
+}else{
+sw.style.background=color;
+}
 
 sw.onclick=()=>{
 
@@ -364,6 +382,22 @@ const config=MODELS[model.value];
 
 hardwareLayer.src=
 ROOT+config.folder+"/hardware.png";
+
+/* COSMIC COLOR ONLY FOR PALADIN */
+
+document.querySelectorAll("#baseSwatches .swatch").forEach(sw=>{
+
+if(sw.dataset.color==="cosmic"){
+
+if(model.value==="paladin"){
+sw.style.display="block";
+}else{
+sw.style.display="none";
+}
+
+}
+
+});
 
 /* PRICE */
 
