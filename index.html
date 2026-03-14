@@ -21,8 +21,6 @@ max-width:900px;
 margin:auto;
 }
 
-/* PREVIEW */
-
 .preview{
 position:relative;
 width:500px;
@@ -39,15 +37,11 @@ width:100%;
 pointer-events:none;
 }
 
-/* LAYER ORDER */
-
 #bg{z-index:1;}
 #base{z-index:2;}
 #inlays{z-index:3;}
 #pickguard{z-index:4;}
 #hardware{z-index:5;}
-
-/* SWATCHES */
 
 .swatches{
 display:flex;
@@ -55,8 +49,6 @@ flex-wrap:wrap;
 justify-content:center;
 gap:8px;
 margin:10px 0 25px 0;
-z-index:10;
-position:relative;
 }
 
 .swatch{
@@ -71,8 +63,6 @@ border:2px solid transparent;
 border:2px solid white;
 }
 
-/* CONTROLS */
-
 select{
 padding:8px;
 margin:10px;
@@ -86,6 +76,18 @@ background:#222;
 color:white;
 border:none;
 padding:10px;
+}
+
+button{
+padding:10px 20px;
+margin:10px;
+cursor:pointer;
+}
+
+.price{
+font-size:22px;
+margin-top:20px;
+font-weight:bold;
 }
 
 </style>
@@ -103,7 +105,7 @@ padding:10px;
 <select id="model">
 <option value="barbarian">Barbarian</option>
 <option value="bard">Bard</option>
-<option value="necromancer">Necromancer</option>
+<option value="necromancer">Necromancer (Double Neck)</option>
 <option value="paladin">Paladin</option>
 <option value="ranger">Ranger</option>
 </select>
@@ -127,6 +129,13 @@ padding:10px;
 <h3>Pickguard</h3>
 <div id="pickguardSwatches" class="swatches"></div>
 
+<div class="price">
+Total Price: <span id="price">$200</span>
+</div>
+
+<button onclick="resetBuilder()">Reset Build</button>
+<button onclick="shareBuild()">Share Build</button>
+
 <h3>Your Build</h3>
 
 <textarea id="summary" readonly></textarea>
@@ -143,30 +152,11 @@ const ROOT="https://raw.githubusercontent.com/KodyTheViking/controller-builder-a
 
 const CONFIG={
 
-barbarian:{
-base:["base-black-r","base-black-l"],
-pickguard:false
-},
-
-bard:{
-base:["base-black-r","base-black-l"],
-pickguard:true
-},
-
-necromancer:{
-base:["base-black3x3","base-black6"],
-pickguard:true
-},
-
-paladin:{
-base:["base-black"],
-pickguard:true
-},
-
-ranger:{
-base:["base-black"],
-pickguard:true
-}
+barbarian:{base:["base-black-r","base-black-l"],pickguard:false,price:200},
+bard:{base:["base-black-r","base-black-l"],pickguard:true,price:200},
+necromancer:{base:["base-black3x3","base-black6"],pickguard:true,price:300},
+paladin:{base:["base-black"],pickguard:true,price:200},
+ranger:{base:["base-black"],pickguard:true,price:200}
 
 };
 
@@ -198,7 +188,6 @@ const baseContainer=document.getElementById("baseSwatches");
 COLORS.forEach(color=>{
 
 let sw=document.createElement("div");
-
 sw.className="swatch";
 sw.style.background=color;
 
@@ -221,6 +210,7 @@ filename+="3x3";
 
 baseLayer.src=ROOT+model.value+"/base/"+filename+".png";
 
+saveBuild();
 updateSummary();
 
 };
@@ -236,10 +226,8 @@ const inlaySelect=document.getElementById("inlaysSelect");
 INLAYS.forEach(i=>{
 
 let option=document.createElement("option");
-
 option.value=i;
 option.text=i;
-
 inlaySelect.appendChild(option);
 
 });
@@ -249,6 +237,7 @@ inlaySelect.onchange=()=>{
 inlaysLayer.src=
 ROOT+model.value+"/inlays/"+inlaySelect.value+".png";
 
+saveBuild();
 updateSummary();
 
 };
@@ -260,7 +249,6 @@ const pickguardContainer=document.getElementById("pickguardSwatches");
 PICKGUARDS.forEach(pg=>{
 
 let sw=document.createElement("div");
-
 sw.className="swatch";
 
 if(pg!=="none") sw.style.background=pg;
@@ -275,6 +263,7 @@ sw.classList.add("active");
 pickguardLayer.src=
 ROOT+model.value+"/pickguards/"+pg+".png";
 
+saveBuild();
 updateSummary();
 
 };
@@ -312,9 +301,21 @@ pickguardContainer.style.display="none";
 
 }
 
+updatePrice();
+saveBuild();
 updateSummary();
 
 };
+
+/* PRICE */
+
+function updatePrice(){
+
+let price=CONFIG[model.value].price;
+
+document.getElementById("price").innerText="$"+price;
+
+}
 
 /* BUILD SUMMARY */
 
@@ -333,9 +334,94 @@ document.getElementById("summary").value=
 `Model: ${model.value}
 Base: ${baseColor}
 Inlays: ${inlay}
-Pickguard: ${pickguard}`;
+Pickguard: ${pickguard}
+Price: $${CONFIG[model.value].price}`;
 
 }
+
+/* SAVE BUILD */
+
+function saveBuild(){
+
+const build={
+model:model.value,
+inlays:inlaySelect.value
+};
+
+localStorage.setItem("guitarBuild",JSON.stringify(build));
+
+}
+
+/* LOAD BUILD */
+
+function loadBuild(){
+
+const saved=localStorage.getItem("guitarBuild");
+
+if(!saved) return;
+
+const build=JSON.parse(saved);
+
+model.value=build.model;
+
+model.onchange();
+
+inlaySelect.value=build.inlays;
+
+}
+
+/* RESET */
+
+function resetBuilder(){
+
+localStorage.removeItem("guitarBuild");
+
+location.reload();
+
+}
+
+/* SHARE LINK */
+
+function shareBuild(){
+
+const data=btoa(JSON.stringify({
+model:model.value,
+inlays:inlaySelect.value
+}));
+
+const url=window.location.origin+window.location.pathname+"?build="+data;
+
+navigator.clipboard.writeText(url);
+
+alert("Build link copied!");
+
+}
+
+/* LOAD FROM URL */
+
+function loadFromURL(){
+
+const params=new URLSearchParams(window.location.search);
+
+const data=params.get("build");
+
+if(!data) return;
+
+try{
+
+const build=JSON.parse(atob(data));
+
+model.value=build.model;
+model.onchange();
+
+inlaySelect.value=build.inlays;
+
+}catch(e){}
+
+}
+
+loadFromURL();
+loadBuild();
 
 /* INITIAL LOAD */
 
