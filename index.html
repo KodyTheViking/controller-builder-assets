@@ -438,7 +438,7 @@ function updateBase(){
 let color =
 document.querySelector("#baseSwatches .active")?.style.background || "black";
 
-let headstock = headstockSelect.value;
+let headstock = headstockSelect.value || "";
 
 let file = "";
 
@@ -446,7 +446,9 @@ let file = "";
 
 if(model.value === "barbarian" || model.value === "bard"){
 
-file = "base-" + color + "-" + headstock;
+if(!headstock) headstock = "r";
+
+file = `base-${color}-${headstock}`;
 
 }
 
@@ -454,7 +456,9 @@ file = "base-" + color + "-" + headstock;
 
 else if(model.value === "necromancer"){
 
-file = "base-" + color + headstock;
+if(!headstock) headstock = "3x3";
+
+file = `base-${color}${headstock}`;
 
 }
 
@@ -462,35 +466,18 @@ file = "base-" + color + headstock;
 
 else{
 
-file = "base-" + color;
+file = `base-${color}`;
 
 }
+
+/* FIX DOUBLE NECK FOLDER */
+
+let folder = model.value === "doubleneck"
+? "double-neck"
+: model.value;
 
 baseLayer.src =
-ROOT + FOLDERS[model.value] + "/base/" + file + ".png";
-
-updateSummary();
-
-}
-
-/* NECROMANCER */
-
-else if(model.value === "necromancer"){
-
-file = "base-" + color + headstock;
-
-}
-
-/* DOUBLE NECK + OTHERS */
-
-else{
-
-file = "base-" + color;
-
-}
-
-baseLayer.src =
-ROOT + FOLDERS[model.value] + "/base/" + file + ".png";
+ROOT + folder + "/base/" + file + ".png";
 
 updateSummary();
 
