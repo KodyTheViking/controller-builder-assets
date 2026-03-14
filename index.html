@@ -488,7 +488,7 @@ let file="";
 
 /* BARBARIAN + BARD */
 
-if(model.value==="barbarian"||model.value==="bard"){
+if(model.value==="barbarian" || model.value==="bard"){
 
 if(!headstock) headstock="r";
 
@@ -506,7 +506,15 @@ file=`base-${color}${headstock}`;
 
 }
 
-/* DOUBLE NECK + OTHERS */
+/* DOUBLE NECK */
+
+else if(model.value==="doubleneck"){
+
+file=`base-${color}`;
+
+}
+
+/* OTHER MODELS (PALADIN, RANGER, ETC) */
 
 else{
 
@@ -526,7 +534,6 @@ ROOT+config.folder+"/base/"+file+".png";
 updateSummary();
 
 }
-
 /* INLAYS */
 
 function updateInlays(){
