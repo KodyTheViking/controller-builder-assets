@@ -30,11 +30,9 @@ align-items:start;
 /* PREVIEW */
 
 .preview{
-position:sticky;
-top:20px;
 width:460px;
 height:460px;
-
+margin:auto;
 display:grid;
 place-items:center;
 }
@@ -433,14 +431,21 @@ if(config.pickguard){
 
 pickguardContainer.style.display="flex";
 
+/* reset swatches */
+
+document.querySelectorAll("#pickguardSwatches .swatch")
+.forEach(s=>s.classList.remove("active"));
+
+/* default to none */
+
+const noneSwatch=document.querySelector('#pickguardSwatches .swatch[data-color="none"]');
+
+if(noneSwatch){
+noneSwatch.classList.add("active");
+}
+
 pickguardLayer.src=
-ROOT+config.folder+"/pickguards/black.png";
-
-}else{
-
-pickguardContainer.style.display="none";
-
-pickguardLayer.src="";
+ROOT+config.folder+"/pickguards/none.png";
 
 }
 
