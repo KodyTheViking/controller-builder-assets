@@ -121,6 +121,16 @@ margin-top:10px;
 
 <div class="preview">
 
+<img id="bg">
+<img id="base">
+<img id="inlays">
+<img id="pickguard">
+<img id="hardware">
+
+</div>
+
+<div class="controls">
+
 <h1>Custom Guitar Controller Builder</h1>
 
 <label>Controller Model</label>
@@ -133,20 +143,29 @@ margin-top:10px;
 <option value="paladin">Paladin</option>
 <option value="ranger">Ranger</option>
 </select>
-  
-<div class="preview">
 
-<img id="bg">
-<img id="base">
-<img id="inlays">
-<img id="pickguard">
-<img id="hardware">
+<h3>Base Color</h3>
+<div id="baseSwatches" class="swatches"></div>
+
+<h3>Inlays</h3>
+<select id="inlaysSelect"></select>
+
+<h3>Pickguard</h3>
+<div id="pickguardSwatches" class="swatches"></div>
+
+<div class="price">
+Total Price: <span id="price">$200</span>
+</div>
+
+<button onclick="resetBuilder()">Reset Build</button>
+<button onclick="shareBuild()">Share Build</button>
+
+<h3>Your Build</h3>
+
+<textarea id="summary" readonly></textarea>
 
 </div>
 
-<div class="controls">
-
-</div>
 </div>
 
 <h3>Base Color</h3>
