@@ -105,9 +105,10 @@ font-weight:bold;
 <select id="model">
 <option value="barbarian">Barbarian</option>
 <option value="bard">Bard</option>
-<option value="necromancer">Necromancer (Double Neck)</option>
+<option value="necromancer">Necromancer</option>
 <option value="paladin">Paladin</option>
 <option value="ranger">Ranger</option>
+<option value="doubleneck">Double Neck</option>
 </select>
 
 <div class="preview">
@@ -154,12 +155,17 @@ const CONFIG={
 
 barbarian:{base:["base-black-r","base-black-l"],pickguard:false,price:200},
 bard:{base:["base-black-r","base-black-l"],pickguard:true,price:200},
-necromancer:{base:["base-black3x3","base-black6"],pickguard:true,price:300},
+necromancer:{base:["base-black3x3","base-black6"],pickguard:true,price:200},
 paladin:{base:["base-black"],pickguard:true,price:200},
-ranger:{base:["base-black"],pickguard:true,price:200}
+ranger:{base:["base-black"],pickguard:true,price:200},
+
+doubleneck:{
+base:["base-black"],
+pickguard:true,
+price:300
+}
 
 };
-
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink"];
 
 const INLAYS=[
