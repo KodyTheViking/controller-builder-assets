@@ -215,6 +215,10 @@ if(model.value==="necromancer"){
 filename+="3x3";
 }
 
+if(model.value==="doubleneck"){
+filename="base-"+color;
+}
+
 baseLayer.src=ROOT+model.value+"/base/"+filename+".png";
 
 saveBuild();
