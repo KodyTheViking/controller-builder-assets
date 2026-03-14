@@ -17,16 +17,19 @@ padding:40px;
 }
 
 .container{
-max-width:900px;
+max-width:1200px;
 margin:auto;
+display:grid;
+grid-template-columns:520px 1fr;
+gap:40px;
+align-items:start;
 }
 
 .preview{
 position:relative;
-width:500px;
-height:500px;
-margin:40px auto;
-overflow:hidden;
+width:520px;
+height:520px;
+margin:auto;
 }
 
 .preview img{
@@ -35,7 +38,6 @@ left:0;
 top:0;
 width:100%;
 pointer-events:none;
-z-index:1;
 }
 
 #bg{z-index:1;}
