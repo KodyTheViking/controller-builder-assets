@@ -212,6 +212,7 @@ Total Price: <span id="price">$200</span>
 <script>
 
 const ROOT="https://raw.githubusercontent.com/KodyTheViking/controller-builder-assets/main/";
+let folder="";
 
 const FOLDERS={
 barbarian:"barbarian",
@@ -372,6 +373,10 @@ headstockSelect.onchange=updateBase;
 /* MODEL CHANGE */
 
 model.onchange=()=>{
+
+folder = model.value === "doubleneck"
+    ? "double-neck"
+    : model.value;
 
 let config=CONFIG[model.value];
 
