@@ -11,25 +11,29 @@ body{
 font-family:Arial, sans-serif;
 background:#111;
 color:white;
-text-align:center;
 margin:0;
 padding:40px;
 }
 
+/* LAYOUT */
+
 .container{
-max-width:1200px;
+max-width:1100px;
 margin:auto;
 display:grid;
-grid-template-columns:520px 1fr;
-gap:40px;
+grid-template-columns:520px 420px;
+gap:60px;
+justify-content:center;
 align-items:start;
 }
 
+/* PREVIEW */
+
 .preview{
-position:relative;
+position:sticky;
+top:40px;
 width:520px;
 height:520px;
-margin:auto;
 }
 
 .preview img{
@@ -40,20 +44,57 @@ width:100%;
 pointer-events:none;
 }
 
+/* LAYER ORDER */
+
 #bg{z-index:1;}
 #base{z-index:2;}
 #inlays{z-index:3;}
 #pickguard{z-index:4;}
 #hardware{z-index:5;}
 
+/* CONTROLS */
+
+.controls{
+width:420px;
+text-align:left;
+}
+
+.controls h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+.controls h3{
+margin-top:30px;
+}
+
+label{
+display:block;
+margin-top:10px;
+}
+
+select{
+padding:8px;
+margin-top:5px;
+width:100%;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+cursor:pointer;
+}
+
+/* SWATCHES */
+
 .swatches{
 display:flex;
 flex-wrap:wrap;
-justify-content:center;
 gap:8px;
-margin:10px 0 25px 0;
+margin-top:10px;
 }
-  
+
 .swatch{
 width:32px;
 height:32px;
@@ -66,10 +107,7 @@ border:2px solid transparent;
 border:2px solid white;
 }
 
-select{
-padding:8px;
-margin:10px;
-}
+/* SUMMARY */
 
 textarea{
 width:100%;
@@ -81,34 +119,29 @@ border:none;
 padding:10px;
 }
 
-button{
-padding:10px 20px;
-margin:10px;
-cursor:pointer;
-}
-
 .price{
-font-size:22px;
 margin-top:20px;
+font-size:20px;
 font-weight:bold;
 }
 
-.container > *:not(.preview){
+/* MOBILE */
+
+@media (max-width:900px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+.preview{
+margin:auto;
 position:relative;
-z-index:5;
 }
 
 .controls{
-text-align:left;
+width:100%;
 }
 
-.controls h3{
-margin-top:30px;
-}
-
-.controls label{
-display:block;
-margin-top:10px;
 }
 
 </style>
@@ -119,6 +152,8 @@ margin-top:10px;
 
 <div class="container">
 
+<!-- PREVIEW -->
+
 <div class="preview">
 
 <img id="bg">
@@ -128,6 +163,8 @@ margin-top:10px;
 <img id="hardware">
 
 </div>
+
+<!-- CONTROLS -->
 
 <div class="controls">
 
@@ -168,52 +205,25 @@ Total Price: <span id="price">$200</span>
 
 </div>
 
-<h3>Base Color</h3>
-<div id="baseSwatches" class="swatches"></div>
-
-<h3>Inlays</h3>
-<select id="inlaysSelect"></select>
-
-<h3>Pickguard</h3>
-<div id="pickguardSwatches" class="swatches"></div>
-
-<div class="price">
-Total Price: <span id="price">$200</span>
-</div>
-
-<button onclick="resetBuilder()">Reset Build</button>
-<button onclick="shareBuild()">Share Build</button>
-
-<h3>Your Build</h3>
-
-<textarea id="summary" readonly></textarea>
-
-</div>
-
 <script>
 
-/* ASSET LOCATION */
+/* ASSET ROOT */
 
 const ROOT="https://raw.githubusercontent.com/KodyTheViking/controller-builder-assets/main/";
 
-/* MODEL CONFIG */
+/* CONFIG */
 
 const CONFIG={
 
-barbarian:{base:["base-black-r","base-black-l"],pickguard:false,price:200},
-
-bard:{base:["base-black-r","base-black-l"],pickguard:true,price:200},
-
-doubleneck:{base:["base-black"],pickguard:true,price:300},
-
-necromancer:{base:["base-black3x3","base-black6"],pickguard:true,price:200},
-
-paladin:{base:["base-black"],pickguard:true,price:200},
-
-ranger:{base:["base-black"],pickguard:true,price:200}
+barbarian:{pickguard:false,price:200},
+bard:{pickguard:true,price:200},
+doubleneck:{pickguard:true,price:300},
+necromancer:{pickguard:true,price:200},
+paladin:{pickguard:true,price:200},
+ranger:{pickguard:true,price:200}
 
 };
-  
+
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink"];
 
 const INLAYS=[
@@ -235,13 +245,14 @@ const bgLayer=document.getElementById("bg");
 
 bgLayer.src=ROOT+"background.png";
 
-/* BASE SWATCHES */
+/* BASE COLORS */
 
 const baseContainer=document.getElementById("baseSwatches");
 
 COLORS.forEach(color=>{
 
 let sw=document.createElement("div");
+
 sw.className="swatch";
 sw.style.background=color;
 
@@ -252,23 +263,9 @@ document.querySelectorAll("#baseSwatches .swatch")
 
 sw.classList.add("active");
 
-let filename="base-"+color;
+baseLayer.src=
+ROOT+model.value+"/base/base-"+color+".png";
 
-if(model.value==="barbarian"||model.value==="bard"){
-filename+="-r";
-}
-
-if(model.value==="necromancer"){
-filename+="3x3";
-}
-
-if(model.value==="doubleneck"){
-filename="base-"+color;
-}
-
-baseLayer.src=ROOT+model.value+"/base/"+filename+".png";
-
-saveBuild();
 updateSummary();
 
 };
@@ -284,8 +281,10 @@ const inlaySelect=document.getElementById("inlaysSelect");
 INLAYS.forEach(i=>{
 
 let option=document.createElement("option");
+
 option.value=i;
 option.text=i;
+
 inlaySelect.appendChild(option);
 
 });
@@ -295,7 +294,6 @@ inlaySelect.onchange=()=>{
 inlaysLayer.src=
 ROOT+model.value+"/inlays/"+inlaySelect.value+".png";
 
-saveBuild();
 updateSummary();
 
 };
@@ -307,6 +305,7 @@ const pickguardContainer=document.getElementById("pickguardSwatches");
 PICKGUARDS.forEach(pg=>{
 
 let sw=document.createElement("div");
+
 sw.className="swatch";
 
 if(pg!=="none") sw.style.background=pg;
@@ -321,7 +320,6 @@ sw.classList.add("active");
 pickguardLayer.src=
 ROOT+model.value+"/pickguards/"+pg+".png";
 
-saveBuild();
 updateSummary();
 
 };
@@ -337,7 +335,7 @@ model.onchange=()=>{
 let config=CONFIG[model.value];
 
 baseLayer.src=
-ROOT+model.value+"/base/"+config.base[0]+".png";
+ROOT+model.value+"/base/base-black.png";
 
 inlaysLayer.src=
 ROOT+model.value+"/inlays/blocks.png";
@@ -359,23 +357,13 @@ pickguardContainer.style.display="none";
 
 }
 
-updatePrice();
-saveBuild();
+document.getElementById("price").innerText="$"+config.price;
+
 updateSummary();
 
 };
 
-/* PRICE */
-
-function updatePrice(){
-
-let price=CONFIG[model.value].price;
-
-document.getElementById("price").innerText="$"+price;
-
-}
-
-/* BUILD SUMMARY */
+/* SUMMARY */
 
 function updateSummary(){
 
@@ -397,48 +385,15 @@ Price: $${CONFIG[model.value].price}`;
 
 }
 
-/* SAVE BUILD */
-
-function saveBuild(){
-
-const build={
-model:model.value,
-inlays:inlaySelect.value
-};
-
-localStorage.setItem("guitarBuild",JSON.stringify(build));
-
-}
-
-/* LOAD BUILD */
-
-function loadBuild(){
-
-const saved=localStorage.getItem("guitarBuild");
-
-if(!saved) return;
-
-const build=JSON.parse(saved);
-
-model.value=build.model;
-
-model.onchange();
-
-inlaySelect.value=build.inlays;
-
-}
-
 /* RESET */
 
 function resetBuilder(){
-
-localStorage.removeItem("guitarBuild");
 
 location.reload();
 
 }
 
-/* SHARE LINK */
+/* SHARE */
 
 function shareBuild(){
 
@@ -455,33 +410,7 @@ alert("Build link copied!");
 
 }
 
-/* LOAD FROM URL */
-
-function loadFromURL(){
-
-const params=new URLSearchParams(window.location.search);
-
-const data=params.get("build");
-
-if(!data) return;
-
-try{
-
-const build=JSON.parse(atob(data));
-
-model.value=build.model;
-model.onchange();
-
-inlaySelect.value=build.inlays;
-
-}catch(e){}
-
-}
-
-loadFromURL();
-loadBuild();
-
-/* INITIAL LOAD */
+/* INIT */
 
 model.onchange();
 
