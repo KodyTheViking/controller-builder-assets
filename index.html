@@ -423,26 +423,43 @@ updateBase();
 
 function updateBase(){
 
-let color=
-document.querySelector("#baseSwatches .active")?.style.background||"black";
+let color =
+document.querySelector("#baseSwatches .active")?.style.background || "black";
 
-let headstock=headstockSelect.value||"";
+let headstock = headstockSelect.value || "";
 
-let file="base-"+color;
+let file = "";
 
-if(headstock){
+/* BARBARIAN + BARD */
 
-file+=headstock;
+if(model.value === "barbarian" || model.value === "bard"){
+
+file = "base-" + color + "-" + headstock;
 
 }
 
-baseLayer.src=
-ROOT+model.value+"/base/"+file+".png";
+/* NECROMANCER */
+
+else if(model.value === "necromancer"){
+
+file = "base-" + color + headstock;
+
+}
+
+/* DOUBLE NECK + OTHERS */
+
+else{
+
+file = "base-" + color;
+
+}
+
+baseLayer.src =
+ROOT + model.value + "/base/" + file + ".png";
 
 updateSummary();
 
 }
-
 /* SUMMARY */
 
 function updateSummary(){
