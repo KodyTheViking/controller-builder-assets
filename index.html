@@ -151,6 +151,11 @@ const bg=document.getElementById("bg");
 
 bg.src=ROOT+"background.png";
 
+base.src = ROOT + model.value + "/base/base-black.png";
+inlays.src = ROOT + model.value + "/inlays/blocks.png";
+pickguard.src = ROOT + model.value + "/pickguards/black.png";
+hardware.src = ROOT + model.value + "/hardware.png";
+
 COLORS.forEach(color=>{
 
 let sw=document.createElement("div");
