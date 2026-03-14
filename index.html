@@ -360,7 +360,16 @@ let sw=document.createElement("div");
 
 sw.className="swatch";
 
-if(pg!=="none") sw.style.background=pg;
+if(pg==="none"){
+
+sw.style.background="#222";
+sw.style.border="2px dashed #888";
+
+}else{
+
+sw.style.background=pg;
+
+}
 
 sw.dataset.color=pg;
 
