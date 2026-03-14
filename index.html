@@ -45,6 +45,11 @@ width:100%;
 pointer-events:none;
 }
 
+.preview.double-neck #inlays{
+transform:scale(1.25);
+transform-origin:center;
+}
+
 /* LAYER ORDER */
 
 #bg{z-index:1;}
@@ -381,6 +386,14 @@ pickguardContainer.appendChild(sw);
 model.onchange=()=>{
 
 const config=MODELS[model.value];
+
+const preview=document.querySelector(".preview");
+
+preview.classList.remove("double-neck");
+
+if(model.value==="doubleneck"){
+preview.classList.add("double-neck");
+}
 
 /* HARDWARE */
 
