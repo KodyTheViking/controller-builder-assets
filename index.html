@@ -554,10 +554,10 @@ function updatePickguard(){
 const config=MODELS[model.value];
 
 let color=
-document.querySelector("#pickguardSwatches .active")?.dataset.color || "black";
+document.querySelector("#pickguardSwatches .active")?.dataset.color || "none";
 
 pickguardLayer.src=
-ROOT+config.folder+"/pickguards/"+color+".png";
+ROOT+config.folder+"/pickguards/none.png";
 
 updateSummary();
 
