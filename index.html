@@ -41,20 +41,15 @@ overflow:hidden;
 position:absolute;
 top:0;
 left:0;
-width:1920px;
-height:1080px;
-transform:scale(0.25);
-transform-origin:top left;
+width:100%;
+height:100%;
 pointer-events:none;
 }
 
-.preview.double-neck #inlays{
-transform:scale(1.25);
-transform-origin:center;
-}
+/* double-neck alignment adjustment */
 
-.preview{
-aspect-ratio:9/16;
+.preview.double-neck #inlays{
+top:6px;
 }
   
 /* LAYER ORDER */
