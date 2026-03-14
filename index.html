@@ -152,8 +152,6 @@ width:100%;
 
 <div class="container">
 
-<!-- PREVIEW -->
-
 <div class="preview">
 
 <img id="bg">
@@ -163,8 +161,6 @@ width:100%;
 <img id="hardware">
 
 </div>
-
-<!-- CONTROLS -->
 
 <div class="controls">
 
@@ -180,6 +176,14 @@ width:100%;
 <option value="paladin">Paladin</option>
 <option value="ranger">Ranger</option>
 </select>
+
+<div id="headstockSection">
+
+<h3>Headstock</h3>
+
+<select id="headstockSelect"></select>
+
+</div>
 
 <h3>Base Color</h3>
 <div id="baseSwatches" class="swatches"></div>
@@ -207,20 +211,45 @@ Total Price: <span id="price">$200</span>
 
 <script>
 
-/* ASSET ROOT */
-
 const ROOT="https://raw.githubusercontent.com/KodyTheViking/controller-builder-assets/main/";
-
-/* CONFIG */
 
 const CONFIG={
 
-barbarian:{pickguard:false,price:200},
-bard:{pickguard:true,price:200},
-doubleneck:{pickguard:true,price:300},
-necromancer:{pickguard:true,price:200},
-paladin:{pickguard:true,price:200},
-ranger:{pickguard:true,price:200}
+barbarian:{
+pickguard:false,
+price:200,
+headstocks:["r","l"]
+},
+
+bard:{
+pickguard:true,
+price:200,
+headstocks:["r","l"]
+},
+
+doubleneck:{
+pickguard:true,
+price:300,
+headstocks:null
+},
+
+necromancer:{
+pickguard:true,
+price:200,
+headstocks:["3x3","6"]
+},
+
+paladin:{
+pickguard:true,
+price:200,
+headstocks:null
+},
+
+ranger:{
+pickguard:true,
+price:200,
+headstocks:null
+}
 
 };
 
@@ -236,6 +265,8 @@ const PICKGUARDS=[...COLORS,"none"];
 /* DOM */
 
 const model=document.getElementById("model");
+const headstockSelect=document.getElementById("headstockSelect");
+const headstockSection=document.getElementById("headstockSection");
 
 const baseLayer=document.getElementById("base");
 const inlaysLayer=document.getElementById("inlays");
@@ -263,10 +294,7 @@ document.querySelectorAll("#baseSwatches .swatch")
 
 sw.classList.add("active");
 
-baseLayer.src=
-ROOT+model.value+"/base/base-"+color+".png";
-
-updateSummary();
+updateBase();
 
 };
 
@@ -328,20 +356,45 @@ pickguardContainer.appendChild(sw);
 
 });
 
+/* HEADSTOCK SELECT */
+
+headstockSelect.onchange=updateBase;
+
 /* MODEL CHANGE */
 
 model.onchange=()=>{
 
 let config=CONFIG[model.value];
 
-baseLayer.src=
-ROOT+model.value+"/base/base-black.png";
-
-inlaysLayer.src=
-ROOT+model.value+"/inlays/blocks.png";
-
 hardwareLayer.src=
 ROOT+model.value+"/hardware.png";
+
+/* HEADSTOCK OPTIONS */
+
+if(config.headstocks){
+
+headstockSection.style.display="block";
+
+headstockSelect.innerHTML="";
+
+config.headstocks.forEach(h=>{
+
+let o=document.createElement("option");
+
+o.value=h;
+o.text=h;
+
+headstockSelect.appendChild(o);
+
+});
+
+}else{
+
+headstockSection.style.display="none";
+
+}
+
+/* PICKGUARD */
 
 if(config.pickguard){
 
@@ -357,11 +410,38 @@ pickguardContainer.style.display="none";
 
 }
 
+inlaysLayer.src=
+ROOT+model.value+"/inlays/blocks.png";
+
 document.getElementById("price").innerText="$"+config.price;
+
+updateBase();
+
+};
+
+/* BASE IMAGE */
+
+function updateBase(){
+
+let color=
+document.querySelector("#baseSwatches .active")?.style.background||"black";
+
+let headstock=headstockSelect.value||"";
+
+let file="base-"+color;
+
+if(headstock){
+
+file+=headstock;
+
+}
+
+baseLayer.src=
+ROOT+model.value+"/base/"+file+".png";
 
 updateSummary();
 
-};
+}
 
 /* SUMMARY */
 
@@ -375,9 +455,12 @@ let inlay=inlaySelect.value;
 let pickguard=
 document.querySelector("#pickguardSwatches .active")?.style.background||"none";
 
+let headstock=headstockSelect.value||"standard";
+
 document.getElementById("summary").value=
 
 `Model: ${model.value}
+Headstock: ${headstock}
 Base: ${baseColor}
 Inlays: ${inlay}
 Pickguard: ${pickguard}
@@ -399,6 +482,7 @@ function shareBuild(){
 
 const data=btoa(JSON.stringify({
 model:model.value,
+headstock:headstockSelect.value,
 inlays:inlaySelect.value
 }));
 
