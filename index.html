@@ -213,6 +213,15 @@ Total Price: <span id="price">$200</span>
 
 const ROOT="https://raw.githubusercontent.com/KodyTheViking/controller-builder-assets/main/";
 
+const FOLDERS={
+barbarian:"barbarian",
+bard:"bard",
+doubleneck:"double-neck",
+necromancer:"necromancer",
+paladin:"paladin",
+ranger:"ranger"
+};
+
 const CONFIG={
 
 barbarian:{
@@ -345,8 +354,8 @@ document.querySelectorAll("#pickguardSwatches .swatch")
 
 sw.classList.add("active");
 
-pickguardLayer.src=
-ROOT+model.value+"/pickguards/"+pg+".png";
+pickguardLayer.src =
+ROOT + FOLDERS[model.value] + "/pickguards/" + pg + ".png";
 
 updateSummary();
 
@@ -366,8 +375,8 @@ model.onchange=()=>{
 
 let config=CONFIG[model.value];
 
-hardwareLayer.src=
-ROOT+model.value+"/hardware.png";
+hardwareLayer.src =
+ROOT + FOLDERS[model.value] + "/hardware.png";
 
 /* HEADSTOCK OPTIONS */
 
@@ -453,7 +462,7 @@ file = "base-" + color;
 }
 
 baseLayer.src =
-ROOT + model.value + "/base/" + file + ".png";
+ROOT + FOLDERS[model.value] + "/base/" + file + ".png";
 
 updateSummary();
 
@@ -476,7 +485,7 @@ file = "base-" + color;
 }
 
 baseLayer.src =
-ROOT + model.value + "/base/" + file + ".png";
+ROOT + FOLDERS[model.value] + "/base/" + file + ".png";
 
 updateSummary();
 
