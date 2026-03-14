@@ -21,7 +21,7 @@ max-width:900px;
 margin:auto;
 }
 
-/* PREVIEW AREA */
+/* PREVIEW */
 
 .preview{
 position:relative;
@@ -36,17 +36,16 @@ position:absolute;
 left:0;
 top:0;
 width:100%;
-height:auto;
 pointer-events:none;
 }
 
 /* LAYER ORDER */
 
-#bg{ z-index:1; }
-#base{ z-index:2; }
-#inlays{ z-index:3; }
-#pickguard{ z-index:4; }
-#hardware{ z-index:5; }
+#bg{z-index:1;}
+#base{z-index:2;}
+#inlays{z-index:3;}
+#pickguard{z-index:4;}
+#hardware{z-index:5;}
 
 /* SWATCHES */
 
@@ -56,8 +55,8 @@ flex-wrap:wrap;
 justify-content:center;
 gap:8px;
 margin:10px 0 25px 0;
+z-index:10;
 position:relative;
-z-index:5;
 }
 
 .swatch{
@@ -136,61 +135,65 @@ padding:10px;
 
 <script>
 
+/* ASSET LOCATION */
+
 const ROOT="https://raw.githubusercontent.com/KodyTheViking/controller-builder-assets/main/";
 
-const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink"];
+/* MODEL CONFIG */
 
-const INLAYS=["blocks","dots","hate","none","onesided","piranhabite","sawtooth","sharkbite"];
-
-const PICKGUARDS=[...COLORS,"none"];
-
-const model=document.getElementById("model");
-
-const CONFIG = {
+const CONFIG={
 
 barbarian:{
-base:["base-black-r","base-black-l"]
+base:["base-black-r","base-black-l"],
+pickguard:false
 },
 
 bard:{
-base:["base-black-r","base-black-l"]
+base:["base-black-r","base-black-l"],
+pickguard:true
 },
 
 necromancer:{
-base:["base-black3x3","base-black6"]
+base:["base-black3x3","base-black6"],
+pickguard:true
 },
 
 paladin:{
-base:["base-black"]
+base:["base-black"],
+pickguard:true
 },
 
 ranger:{
-base:["base-black"]
+base:["base-black"],
+pickguard:true
 }
 
 };
 
-model.onchange = () => {
+const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink"];
 
-base.src = ROOT + model.value + "/base/" + CONFIG[model.value].base[0] + ".png";
-inlays.src = ROOT + model.value + "/inlays/blocks.png";
-pickguard.src = ROOT + model.value + "/pickguards/black.png";
-hardware.src = ROOT + model.value + "/hardware.png";
+const INLAYS=[
+"blocks","dots","hate","none",
+"onesided","piranhabite","sawtooth","sharkbite"
+];
 
-};
+const PICKGUARDS=[...COLORS,"none"];
 
-const base=document.getElementById("base");
-const inlays=document.getElementById("inlays");
-const pickguard=document.getElementById("pickguard");
-const hardware=document.getElementById("hardware");
-const bg=document.getElementById("bg");
+/* DOM */
 
-bg.src=ROOT+"background.png";
+const model=document.getElementById("model");
 
-base.src = ROOT + model.value + "/base/base-black.png";
-inlays.src = ROOT + model.value + "/inlays/blocks.png";
-pickguard.src = ROOT + model.value + "/pickguards/black.png";
-hardware.src = ROOT + model.value + "/hardware.png";
+const baseLayer=document.getElementById("base");
+const inlaysLayer=document.getElementById("inlays");
+const pickguardLayer=document.getElementById("pickguard");
+const hardwareLayer=document.getElementById("hardware");
+const bgLayer=document.getElementById("bg");
+
+bgLayer.src=ROOT+"background.png";
+
+/* BASE SWATCHES */
+
+const baseContainer=document.getElementById("baseSwatches");
 
 COLORS.forEach(color=>{
 
@@ -201,36 +204,58 @@ sw.style.background=color;
 
 sw.onclick=()=>{
 
-document.querySelectorAll("#baseSwatches .swatch").forEach(s=>s.classList.remove("active"));
+document.querySelectorAll("#baseSwatches .swatch")
+.forEach(s=>s.classList.remove("active"));
+
 sw.classList.add("active");
 
-base.src=ROOT+model.value+"/base/base-"+color+".png";
+let filename="base-"+color;
+
+if(model.value==="barbarian"||model.value==="bard"){
+filename+="-r";
+}
+
+if(model.value==="necromancer"){
+filename+="3x3";
+}
+
+baseLayer.src=ROOT+model.value+"/base/"+filename+".png";
 
 updateSummary();
 
 };
 
-document.getElementById("baseSwatches").appendChild(sw);
+baseContainer.appendChild(sw);
 
 });
+
+/* INLAYS */
+
+const inlaySelect=document.getElementById("inlaysSelect");
 
 INLAYS.forEach(i=>{
 
-let o=document.createElement("option");
-o.value=i;
-o.text=i;
+let option=document.createElement("option");
 
-document.getElementById("inlaysSelect").appendChild(o);
+option.value=i;
+option.text=i;
+
+inlaySelect.appendChild(option);
 
 });
 
-document.getElementById("inlaysSelect").onchange=()=>{
+inlaySelect.onchange=()=>{
 
-inlays.src=ROOT+model.value+"/inlays/"+document.getElementById("inlaysSelect").value+".png";
+inlaysLayer.src=
+ROOT+model.value+"/inlays/"+inlaySelect.value+".png";
 
 updateSummary();
 
 };
+
+/* PICKGUARDS */
+
+const pickguardContainer=document.getElementById("pickguardSwatches");
 
 PICKGUARDS.forEach(pg=>{
 
@@ -242,33 +267,79 @@ if(pg!=="none") sw.style.background=pg;
 
 sw.onclick=()=>{
 
-document.querySelectorAll("#pickguardSwatches .swatch").forEach(s=>s.classList.remove("active"));
+document.querySelectorAll("#pickguardSwatches .swatch")
+.forEach(s=>s.classList.remove("active"));
+
 sw.classList.add("active");
 
-pickguard.src=ROOT+model.value+"/pickguards/"+pg+".png";
+pickguardLayer.src=
+ROOT+model.value+"/pickguards/"+pg+".png";
 
 updateSummary();
 
 };
 
-document.getElementById("pickguardSwatches").appendChild(sw);
+pickguardContainer.appendChild(sw);
 
 });
 
+/* MODEL CHANGE */
+
+model.onchange=()=>{
+
+let config=CONFIG[model.value];
+
+baseLayer.src=
+ROOT+model.value+"/base/"+config.base[0]+".png";
+
+inlaysLayer.src=
+ROOT+model.value+"/inlays/blocks.png";
+
+hardwareLayer.src=
+ROOT+model.value+"/hardware.png";
+
+if(config.pickguard){
+
+pickguardLayer.src=
+ROOT+model.value+"/pickguards/black.png";
+
+pickguardContainer.style.display="flex";
+
+}else{
+
+pickguardLayer.src="";
+pickguardContainer.style.display="none";
+
+}
+
+updateSummary();
+
+};
+
+/* BUILD SUMMARY */
+
 function updateSummary(){
 
-let baseColor=document.querySelector("#baseSwatches .active")?.style.background||"";
-let inlay=document.getElementById("inlaysSelect").value;
-let pg=document.querySelector("#pickguardSwatches .active")?.style.background||"none";
+let baseColor=
+document.querySelector("#baseSwatches .active")?.style.background||"";
+
+let inlay=inlaySelect.value;
+
+let pickguard=
+document.querySelector("#pickguardSwatches .active")?.style.background||"none";
 
 document.getElementById("summary").value=
 
 `Model: ${model.value}
 Base: ${baseColor}
 Inlays: ${inlay}
-Pickguard: ${pg}`;
+Pickguard: ${pickguard}`;
 
 }
+
+/* INITIAL LOAD */
+
+model.onchange();
 
 </script>
 
