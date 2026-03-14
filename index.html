@@ -377,20 +377,18 @@ headstockSection.style.display="block";
 
 headstockSelect.innerHTML="";
 
-config.headstocks.forEach(h=>{
+config.headstocks.forEach((h,i)=>{
 
 let o=document.createElement("option");
 
 o.value=h;
 o.text=h;
 
+if(i===0) o.selected=true;
+
 headstockSelect.appendChild(o);
 
 });
-
-}else{
-
-headstockSection.style.display="none";
 
 }
 
@@ -426,7 +424,7 @@ function updateBase(){
 let color =
 document.querySelector("#baseSwatches .active")?.style.background || "black";
 
-let headstock = headstockSelect.value || "";
+let headstock = headstockSelect.value;
 
 let file = "";
 
@@ -435,6 +433,29 @@ let file = "";
 if(model.value === "barbarian" || model.value === "bard"){
 
 file = "base-" + color + "-" + headstock;
+
+}
+
+/* NECROMANCER */
+
+else if(model.value === "necromancer"){
+
+file = "base-" + color + headstock;
+
+}
+
+/* DOUBLE NECK + OTHERS */
+
+else{
+
+file = "base-" + color;
+
+}
+
+baseLayer.src =
+ROOT + model.value + "/base/" + file + ".png";
+
+updateSummary();
 
 }
 
