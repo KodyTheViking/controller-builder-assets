@@ -538,8 +538,21 @@ function updateInlays(){
 
 const config=MODELS[model.value];
 
-inlaysLayer.src=
-ROOT+config.folder+"/inlays/"+inlaySelect.value+".png";
+let style=inlaySelect.value;
+
+let color =
+document.querySelector("#inlayColorSwatches .active")?.dataset.color || "white";
+
+let folder="inlays";
+
+/* double neck uses different asset set */
+
+if(model.value==="doubleneck"){
+folder="inlays-double-neck";
+}
+
+inlaysLayer.src =
+ROOT + folder + "/" + color + "/" + style + ".png";
 
 updateSummary();
 
