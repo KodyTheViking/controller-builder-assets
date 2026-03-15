@@ -258,7 +258,7 @@ ranger:{folder:"ranger",price:200,pickguard:true,headstocks:null}
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink","cosmic"];
 
 const INLAY_COLORS=[
-"white","red","orange","yellow","green","blue","purple","pink","none"
+"black","white","red","orange","yellow","green","blue","purple","pink","none"
 ];
 
 const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite"];
@@ -379,8 +379,16 @@ let sw=document.createElement("div");
 
 sw.className="swatch";
 
-if(pg!=="none"){sw.style.background=pg;}
+if(pg==="none"){
 
+sw.style.background="#222";
+sw.style.border="2px dashed #777";
+
+}else{
+
+sw.style.background=pg;
+
+}
 sw.dataset.color=pg;
 
 sw.onclick=()=>{
