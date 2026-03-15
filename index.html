@@ -208,8 +208,11 @@ width:100%;
 <h3>Base Color</h3>
 <div id="baseSwatches" class="swatches"></div>
 
-<h3>Inlays</h3>
-<select id="inlaysSelect"></select>
+<h3>Inlay Style</h3>
+<div id="inlayStyleSwatches" class="swatches"></div>
+
+<h3>Inlay Color</h3>
+<div id="inlayColorSwatches" class="swatches"></div>
 
 <h3>Pickguard</h3>
 <div id="pickguardSwatches" class="swatches"></div>
@@ -285,6 +288,29 @@ const COLORS=[
 "black","white","red","orange","yellow","green","blue","purple","pink","cosmic"
 ];
 
+COLORS.forEach(color=>{
+
+let sw=document.createElement("div");
+
+sw.className="swatch";
+sw.style.background=color;
+sw.dataset.color=color;
+
+sw.onclick=()=>{
+
+document.querySelectorAll("#inlayColorSwatches .swatch")
+.forEach(s=>s.classList.remove("active"));
+
+sw.classList.add("active");
+
+updateInlays();
+
+};
+
+inlayColorContainer.appendChild(sw);
+
+});
+
 const INLAYS=[
 "blocks","dots","hate","none",
 "onesided","piranhabite","sawtooth","sharkbite"
@@ -310,6 +336,9 @@ const baseContainer=document.getElementById("baseSwatches");
 const pickguardContainer=document.getElementById("pickguardSwatches");
 const inlaySelect=document.getElementById("inlaysSelect");
 
+const inlayStyleContainer=document.getElementById("inlayStyleSwatches");
+const inlayColorContainer=document.getElementById("inlayColorSwatches");
+
 /* BASE COLOR SWATCHES */
 
 COLORS.forEach(color=>{
@@ -333,6 +362,34 @@ document.querySelectorAll("#baseSwatches .swatch")
 sw.classList.add("active");
 
 updateBase();
+
+INLAYS.forEach(style=>{
+
+let sw=document.createElement("div");
+
+sw.className="swatch";
+
+sw.style.backgroundImage=
+`url(${ROOT}inlays/white/${style}.png)`;
+
+sw.style.backgroundSize="cover";
+
+sw.dataset.style=style;
+
+sw.onclick=()=>{
+
+document.querySelectorAll("#inlayStyleSwatches .swatch")
+.forEach(s=>s.classList.remove("active"));
+
+sw.classList.add("active");
+
+updateInlays();
+
+};
+
+inlayStyleContainer.appendChild(sw);
+
+});
 
 };
 
@@ -470,6 +527,9 @@ headstockSection.style.display="none";
 updateBase();
 updateInlays();
 
+document.querySelector("#inlayStyleSwatches .swatch")?.classList.add("active");
+document.querySelector("#inlayColorSwatches .swatch")?.classList.add("active");
+
 };
 
 /* BASE IMAGE */
@@ -537,16 +597,13 @@ updateSummary();
 
 function updateInlays(){
 
-const config=MODELS[model.value];
-
-let style=inlaySelect.value;
+let style =
+document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
 
 let color =
 document.querySelector("#inlayColorSwatches .active")?.dataset.color || "white";
 
 let folder="inlays";
-
-/* double neck uses its own folder */
 
 if(model.value==="doubleneck"){
 folder="double-neck inlays";
