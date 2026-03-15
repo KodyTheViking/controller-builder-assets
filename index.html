@@ -257,6 +257,10 @@ ranger:{folder:"ranger",price:200,pickguard:true,headstocks:null}
 
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink","cosmic"];
 
+const INLAY_COLORS=[
+"black","white","red","orange","yellow","green","blue","purple","pink","none"
+];
+
 const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite"];
 
 const PICKGUARDS=[...COLORS,"none"];
@@ -314,7 +318,7 @@ let sw=document.createElement("div");
 
 sw.className="swatch";
 
-sw.style.backgroundImage=`url(${ROOT}inlays/white/${style}.png)`;
+sw.style.backgroundImage=`url(${ROOT}inlay-thumbs/${style}.png)`;
 
 sw.dataset.style=style;
 
@@ -334,14 +338,22 @@ inlayStyleContainer.appendChild(sw);
 
 /* INLAY COLOR SWATCHES */
 
-COLORS.forEach(color=>{
+INLAY_COLORS.forEach(color=>{
 
 let sw=document.createElement("div");
 
 sw.className="swatch";
 
-if(color==="cosmic"){sw.classList.add("rainbow");}
-else{sw.style.background=color;}
+if(color==="none"){
+
+sw.style.background="#222";
+sw.style.border="2px dashed #777";
+
+}else{
+
+sw.style.background=color;
+
+}
 
 sw.dataset.color=color;
 
@@ -498,13 +510,17 @@ function updateInlays(){
 
 let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
 
-let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "white";
+let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "none";
 
 let folder="inlays";
 
 if(model.value==="doubleneck"){folder="double-neck inlays";}
 
+if(color==="none"){
+inlaysLayer.src="";
+}else{
 inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
+}
 
 updateSummary();
 
