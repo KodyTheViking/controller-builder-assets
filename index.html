@@ -40,15 +40,9 @@ margin:auto;
 position:absolute;
 top:0;
 left:0;
-width:100%;
+width:105%;
 height:auto;
 pointer-events:none;
-}
-
-/* double neck inlay correction */
-
-.preview.double-neck #inlays{
-width:101%;
 }
   
 /* LAYER ORDER */
@@ -96,8 +90,8 @@ cursor:pointer;
 /* SWATCHES */
 
 .swatches{
-display:fl;
-fl-wrap:wrap;
+display:flex;
+flex-wrap:wrap;
 gap:8px;
 margin-top:10px;
 }
@@ -129,7 +123,7 @@ violet
 
 /* SUMMARY */
 
-ttarea{
+textarea{
 width:100%;
 height:120px;
 margin-top:10px;
@@ -223,7 +217,7 @@ Total Price: <span id="price">$200</span>
 
 <h3>Your Build</h3>
 
-<ttarea id="summary" readonly></ttarea>
+<textarea id="summary" readonly></textarea>
 
 </div>
 
@@ -347,7 +341,7 @@ INLAYS.forEach(i=>{
 let option=document.createElement("option");
 
 option.value=i;
-option.tt=i;
+option.text=i;
 
 inlaySelect.appendChild(option);
 
@@ -390,12 +384,6 @@ const config=MODELS[model.value];
 
 const preview=document.querySelector(".preview");
 
-preview.className="preview";
-
-if(model.value==="doubleneck"){
-preview.classList.add("double-neck");
-}
-
 /* reset preview classes */
 
 preview.className="preview";
@@ -423,13 +411,13 @@ sw.style.display="none";
 
 /* PRICE */
 
-document.getElementById("price").innerTt="$"+config.price;
+document.getElementById("price").innerText="$"+config.price;
 
 /* PICKGUARD */
 
 if(config.pickguard){
 
-pickguardContainer.style.display="fl";
+pickguardContainer.style.display="flex";
 
 pickguardLayer.src=
 ROOT+config.folder+"/pickguards/black.png";
@@ -456,9 +444,9 @@ let o=document.createElement("option");
 
 o.value=h;
 
-if(h==="r") o.tt="Standard";
-else if(h==="l") o.tt="Reverse";
-else if(h==="3x3") o.tt="3x3";
+if(h==="r") o.text="Standard";
+else if(h==="l") o.text="Reverse";
+else if(h==="3x3") o.text="3x3";
 else if(h==="6") o.text="6 in line";
 
 headstockSelect.appendChild(o);
