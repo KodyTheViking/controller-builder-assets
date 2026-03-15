@@ -390,6 +390,12 @@ const config=MODELS[model.value];
 
 const preview=document.querySelector(".preview");
 
+preview.className="preview";
+
+if(model.value==="doubleneck"){
+preview.classList.add("double-neck");
+}
+
 /* reset preview classes */
 
 preview.className="preview";
