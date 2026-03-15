@@ -257,13 +257,16 @@ ranger:{folder:"ranger",price:200,pickguard:true,headstocks:null}
 
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink","cosmic"];
 
+const PICKGUARD_COLORS=[
+"black","white","red","orange","yellow","green","blue","purple","pink","none"
+];
+
 const INLAY_COLORS=[
 "black","white","red","orange","yellow","green","blue","purple","pink","none"
 ];
 
 const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite"];
 
-const PICKGUARDS=[...COLORS,"none"];
 
 /* DOM */
 
@@ -373,7 +376,7 @@ inlayColorContainer.appendChild(sw);
 
 /* PICKGUARDS */
 
-PICKGUARDS.forEach(pg=>{
+PICKGUARD_COLORS.forEach(pg=>{
 
 let sw=document.createElement("div");
 
