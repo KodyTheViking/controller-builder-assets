@@ -288,6 +288,16 @@ const COLORS=[
 "black","white","red","orange","yellow","green","blue","purple","pink","cosmic"
 ];
 
+const INLAY_STYLES=[
+"blocks",
+"dots",
+"hate",
+"onesided",
+"piranhabite",
+"sawtooth",
+"sharkbite"
+];
+
 COLORS.forEach(color=>{
 
 let sw=document.createElement("div");
@@ -394,6 +404,36 @@ inlayStyleContainer.appendChild(sw);
 };
 
 baseContainer.appendChild(sw);
+
+});
+
+INLAY_STYLES.forEach(style=>{
+
+let sw=document.createElement("div");
+
+sw.className="swatch";
+
+sw.style.backgroundImage=
+`url(${ROOT}inlays/white/${style}.png)`;
+
+sw.style.backgroundSize="contain";
+sw.style.backgroundRepeat="no-repeat";
+sw.style.backgroundPosition="center";
+
+sw.dataset.style=style;
+
+sw.onclick=()=>{
+
+document.querySelectorAll("#inlayStyleSwatches .swatch")
+.forEach(s=>s.classList.remove("active"));
+
+sw.classList.add("active");
+
+updateInlays();
+
+};
+
+inlayStyleContainer.appendChild(sw);
 
 });
 
