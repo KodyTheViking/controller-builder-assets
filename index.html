@@ -18,11 +18,11 @@ padding:20px;
 /* LAYOUT */
 
 .container{
-max-width:980px;
+max-width:900px;
 margin:auto;
 display:grid;
-grid-template-columns:460px 380px;
-gap:40px;
+grid-template-columns:380px 360px;
+gap:30px;
 justify-content:center;
 align-items:start;
 }
@@ -31,8 +31,7 @@ align-items:start;
 
 .preview{
 position:relative;
-width:420px;
-height:auto;
+width:380px;
 margin:auto;
 }
 
@@ -40,16 +39,17 @@ margin:auto;
 position:absolute;
 top:0;
 left:0;
-width:101%;
+width:100%;
 height:auto;
 pointer-events:none;
 }
 
+/* small correction for double neck */
+
 .preview.double-neck #inlays{
 transform:translateX(-10px);
-}width:102%;
 }
-  
+
 /* LAYER ORDER */
 
 #bg{z-index:1;}
@@ -61,7 +61,7 @@ transform:translateX(-10px);
 /* CONTROLS */
 
 .controls{
-width:420px;
+width:360px;
 text-align:left;
 }
 
@@ -107,6 +107,9 @@ height:32px;
 border-radius:4px;
 cursor:pointer;
 border:2px solid transparent;
+background-size:contain;
+background-repeat:no-repeat;
+background-position:center;
 }
 
 .swatch.active{
@@ -136,7 +139,6 @@ background:#222;
 color:white;
 border:none;
 padding:10px;
-Inlays: ${style} (${color})
 }
 
 .price{
@@ -155,7 +157,6 @@ grid-template-columns:1fr;
 
 .preview{
 margin:auto;
-position:relative;
 }
 
 .controls{
@@ -240,81 +241,23 @@ const ROOT="https://kodytheviking.github.io/controller-builder-assets/";
 
 const MODELS={
 
-barbarian:{
-folder:"barbarian",
-price:200,
-pickguard:false,
-headstocks:["r","l"]
-},
+barbarian:{folder:"barbarian",price:200,pickguard:false,headstocks:["r","l"]},
 
-bard:{
-folder:"bard",
-price:200,
-pickguard:true,
-headstocks:["r","l"]
-},
+bard:{folder:"bard",price:200,pickguard:true,headstocks:["r","l"]},
 
-doubleneck:{
-folder:"double-neck",
-price:300,
-pickguard:true,
-headstocks:null
-},
+doubleneck:{folder:"double-neck",price:300,pickguard:true,headstocks:null},
 
-necromancer:{
-folder:"necromancer",
-price:200,
-pickguard:true,
-headstocks:["3x3","6"]
-},
+necromancer:{folder:"necromancer",price:200,pickguard:true,headstocks:["3x3","6"]},
 
-paladin:{
-folder:"paladin",
-price:200,
-pickguard:true,
-headstocks:null
-},
+paladin:{folder:"paladin",price:200,pickguard:true,headstocks:null},
 
-ranger:{
-folder:"ranger",
-price:200,
-pickguard:true,
-headstocks:null
-}
+ranger:{folder:"ranger",price:200,pickguard:true,headstocks:null}
 
 };
 
-const COLORS=[
-"black","white","red","orange","yellow","green","blue","purple","pink","cosmic"
-];
+const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink","cosmic"];
 
-COLORS.forEach(color=>{
-
-let sw=document.createElement("div");
-
-sw.className="swatch";
-sw.style.background=color;
-sw.dataset.color=color;
-
-sw.onclick=()=>{
-
-document.querySelectorAll("#inlayColorSwatches .swatch")
-.forEach(s=>s.classList.remove("active"));
-
-sw.classList.add("active");
-
-updateInlays();
-
-};
-
-inlayColorContainer.appendChild(sw);
-
-});
-
-const INLAYS=[
-"blocks","dots","hate","none",
-"onesided","piranhabite","sawtooth","sharkbite"
-];
+const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite"];
 
 const PICKGUARDS=[...COLORS,"none"];
 
@@ -327,15 +270,13 @@ const pickguardLayer=document.getElementById("pickguard");
 const hardwareLayer=document.getElementById("hardware");
 const bgLayer=document.getElementById("bg");
 
-bgLayer.src = ROOT + "background.png";
+bgLayer.src = ROOT+"background.png";
 
 const headstockSelect=document.getElementById("headstockSelect");
 const headstockSection=document.getElementById("headstockSection");
 
 const baseContainer=document.getElementById("baseSwatches");
 const pickguardContainer=document.getElementById("pickguardSwatches");
-const inlaySelect=document.getElementById("inlaysSelect");
-
 const inlayStyleContainer=document.getElementById("inlayStyleSwatches");
 const inlayColorContainer=document.getElementById("inlayColorSwatches");
 
@@ -348,20 +289,24 @@ let sw=document.createElement("div");
 sw.className="swatch";
 sw.dataset.color=color;
 
-if(color==="cosmic"){
-sw.classList.add("rainbow");
-}else{
-sw.style.background=color;
-}
+if(color==="cosmic"){sw.classList.add("rainbow");}
+else{sw.style.background=color;}
 
 sw.onclick=()=>{
 
-document.querySelectorAll("#baseSwatches .swatch")
-.forEach(s=>s.classList.remove("active"));
+document.querySelectorAll("#baseSwatches .swatch").forEach(s=>s.classList.remove("active"));
 
 sw.classList.add("active");
 
 updateBase();
+
+};
+
+baseContainer.appendChild(sw);
+
+});
+
+/* INLAY STYLE SWATCHES */
 
 INLAYS.forEach(style=>{
 
@@ -369,17 +314,13 @@ let sw=document.createElement("div");
 
 sw.className="swatch";
 
-sw.style.backgroundImage=
-`url(${ROOT}inlays/white/${style}.png)`;
-
-sw.style.backgroundSize="cover";
+sw.style.backgroundImage=`url(${ROOT}inlays/white/${style}.png)`;
 
 sw.dataset.style=style;
 
 sw.onclick=()=>{
 
-document.querySelectorAll("#inlayStyleSwatches .swatch")
-.forEach(s=>s.classList.remove("active"));
+document.querySelectorAll("#inlayStyleSwatches .swatch").forEach(s=>s.classList.remove("active"));
 
 sw.classList.add("active");
 
@@ -391,26 +332,32 @@ inlayStyleContainer.appendChild(sw);
 
 });
 
+/* INLAY COLOR SWATCHES */
+
+COLORS.forEach(color=>{
+
+let sw=document.createElement("div");
+
+sw.className="swatch";
+
+if(color==="cosmic"){sw.classList.add("rainbow");}
+else{sw.style.background=color;}
+
+sw.dataset.color=color;
+
+sw.onclick=()=>{
+
+document.querySelectorAll("#inlayColorSwatches .swatch").forEach(s=>s.classList.remove("active"));
+
+sw.classList.add("active");
+
+updateInlays();
+
 };
 
-baseContainer.appendChild(sw);
+inlayColorContainer.appendChild(sw);
 
 });
-
-/* INLAY OPTIONS */
-
-INLAYS.forEach(i=>{
-
-let option=document.createElement("option");
-
-option.value=i;
-option.text=i;
-
-inlaySelect.appendChild(option);
-
-});
-
-inlaySelect.onchange=updateInlays;
 
 /* PICKGUARDS */
 
@@ -420,14 +367,13 @@ let sw=document.createElement("div");
 
 sw.className="swatch";
 
-if(pg!=="none") sw.style.background=pg;
+if(pg!=="none"){sw.style.background=pg;}
 
 sw.dataset.color=pg;
 
 sw.onclick=()=>{
 
-document.querySelectorAll("#pickguardSwatches .swatch")
-.forEach(s=>s.classList.remove("active"));
+document.querySelectorAll("#pickguardSwatches .swatch").forEach(s=>s.classList.remove("active"));
 
 sw.classList.add("active");
 
@@ -447,32 +393,13 @@ const config=MODELS[model.value];
 
 const preview=document.querySelector(".preview");
 
-/* reset preview classes */
-
 preview.className="preview";
 
-/* HARDWARE */
-
-hardwareLayer.src=
-ROOT+config.folder+"/hardware.png";
-
-/* COSMIC COLOR ONLY FOR PALADIN */
-
-document.querySelectorAll("#baseSwatches .swatch").forEach(sw=>{
-
-if(sw.dataset.color==="cosmic"){
-
-if(model.value==="paladin"){
-sw.style.display="block";
-}else{
-sw.style.display="none";
+if(model.value==="doubleneck"){
+preview.classList.add("double-neck");
 }
 
-}
-
-});
-
-/* PRICE */
+hardwareLayer.src=ROOT+config.folder+"/hardware.png";
 
 document.getElementById("price").innerText="$"+config.price;
 
@@ -481,14 +408,11 @@ document.getElementById("price").innerText="$"+config.price;
 if(config.pickguard){
 
 pickguardContainer.style.display="flex";
-
-pickguardLayer.src=
-ROOT+config.folder+"/pickguards/black.png";
+pickguardLayer.src=ROOT+config.folder+"/pickguards/black.png";
 
 }else{
 
 pickguardContainer.style.display="none";
-
 pickguardLayer.src="";
 
 }
@@ -498,10 +422,9 @@ pickguardLayer.src="";
 if(config.headstocks){
 
 headstockSection.style.display="block";
-
 headstockSelect.innerHTML="";
 
-config.headstocks.forEach((h,i)=>{
+config.headstocks.forEach(h=>{
 
 let o=document.createElement("option");
 
@@ -522,13 +445,8 @@ headstockSection.style.display="none";
 
 }
 
-/* DEFAULT ASSETS */
-
 updateBase();
 updateInlays();
-
-document.querySelector("#inlayStyleSwatches .swatch")?.classList.add("active");
-document.querySelector("#inlayColorSwatches .swatch")?.classList.add("active");
 
 };
 
@@ -538,24 +456,19 @@ function updateBase(){
 
 const config=MODELS[model.value];
 
-let color=
-document.querySelector("#baseSwatches .active")?.dataset.color || "black";
+let color=document.querySelector("#baseSwatches .active")?.dataset.color || "black";
 
 let headstock=headstockSelect.value;
 
 let file="";
 
-/* BARBARIAN + BARD */
-
-if(model.value==="barbarian" || model.value==="bard"){
+if(model.value==="barbarian"||model.value==="bard"){
 
 if(!headstock) headstock="r";
 
 file=`base-${color}-${headstock}`;
 
 }
-
-/* NECROMANCER */
 
 else if(model.value==="necromancer"){
 
@@ -565,68 +478,47 @@ file=`base-${color}${headstock}`;
 
 }
 
-/* DOUBLE NECK */
-
-else if(model.value==="doubleneck"){
-
-file=`base-${color}`;
-
-}
-
-/* OTHER MODELS (PALADIN, RANGER, ETC) */
-
 else{
 
 file=`base-${color}`;
 
 }
 
-/* PALADIN COSMIC OVERRIDE */
+if(model.value==="paladin" && color==="cosmic"){file="base-cosmic";}
 
-if(model.value==="paladin" && color==="cosmic"){
-file="base-cosmic";
-}
-
-baseLayer.src=
-ROOT+config.folder+"/base/"+file+".png";
+baseLayer.src=ROOT+config.folder+"/base/"+file+".png";
 
 updateSummary();
 
 }
+
 /* INLAYS */
 
 function updateInlays(){
 
-let style =
-document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
+let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
 
-let color =
-document.querySelector("#inlayColorSwatches .active")?.dataset.color || "white";
+let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "white";
 
 let folder="inlays";
 
-if(model.value==="doubleneck"){
-folder="double-neck inlays";
-}
+if(model.value==="doubleneck"){folder="double-neck inlays";}
 
-inlaysLayer.src =
-ROOT + folder + "/" + color + "/" + style + ".png";
+inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
 
 updateSummary();
 
 }
-  
+
 /* PICKGUARD */
 
 function updatePickguard(){
 
 const config=MODELS[model.value];
 
-let color=
-document.querySelector("#pickguardSwatches .active")?.dataset.color || "black";
+let color=document.querySelector("#pickguardSwatches .active")?.dataset.color || "black";
 
-pickguardLayer.src=
-ROOT+config.folder+"/pickguards/"+color+".png";
+pickguardLayer.src=ROOT+config.folder+"/pickguards/"+color+".png";
 
 updateSummary();
 
@@ -638,11 +530,13 @@ function updateSummary(){
 
 const config=MODELS[model.value];
 
-let baseColor=
-document.querySelector("#baseSwatches .active")?.dataset.color || "";
+let baseColor=document.querySelector("#baseSwatches .active")?.dataset.color || "";
 
-let pickguard=
-document.querySelector("#pickguardSwatches .active")?.dataset.color || "none";
+let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "";
+
+let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "";
+
+let pickguard=document.querySelector("#pickguardSwatches .active")?.dataset.color || "none";
 
 let headstock=headstockSelect.value || "";
 
@@ -651,7 +545,7 @@ document.getElementById("summary").value=
 `Model: ${model.value}
 Headstock: ${headstock}
 Base: ${baseColor}
-Inlays: ${inlaySelect.value}
+Inlays: ${style} (${color})
 Pickguard: ${pickguard}
 Price: $${config.price}`;
 
