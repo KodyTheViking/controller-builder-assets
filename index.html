@@ -418,6 +418,22 @@ const preview=document.querySelector(".preview");
 
 preview.className="preview";
 
+/* COSMIC COLOR ONLY FOR PALADIN */
+
+document.querySelectorAll("#baseSwatches .swatch").forEach(sw=>{
+
+if(sw.dataset.color==="cosmic"){
+
+if(model.value==="paladin"){
+sw.style.display="inline-block";
+}else{
+sw.style.display="none";
+}
+
+}
+
+});
+
 if(model.value==="doubleneck"){
 preview.classList.add("double-neck");
 }
