@@ -546,10 +546,10 @@ document.querySelector("#inlayColorSwatches .active")?.dataset.color || "white";
 
 let folder="inlays";
 
-/* double neck uses different asset set */
+/* double neck uses its own folder */
 
 if(model.value==="doubleneck"){
-folder="inlays-double-neck";
+folder="double-neck inlays";
 }
 
 inlaysLayer.src =
@@ -558,7 +558,7 @@ ROOT + folder + "/" + color + "/" + style + ".png";
 updateSummary();
 
 }
-
+  
 /* PICKGUARD */
 
 function updatePickguard(){
