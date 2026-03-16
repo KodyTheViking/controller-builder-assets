@@ -167,7 +167,7 @@ width:100%;
 }
 
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   
 </style>
@@ -248,7 +248,9 @@ Total Price: <span id="price">$200</span>
 <script>
 
 (function(){
-emailjs.init(AH9IAg7CHTj9tSwG4);
+emailjs.init({
+publicKey: "AH9IAg7CHTj9tSwG4",
+});
 })();
 
 const ROOT="https://kodytheviking.github.io/controller-builder-assets/";
