@@ -293,6 +293,12 @@ const pickguardLayer=document.getElementById("pickguard");
 const hardwareLayer=document.getElementById("hardware");
 const bgLayer=document.getElementById("bg");
 
+baseLayer.crossOrigin="anonymous";
+inlaysLayer.crossOrigin="anonymous";
+pickguardLayer.crossOrigin="anonymous";
+hardwareLayer.crossOrigin="anonymous";
+bgLayer.crossOrigin="anonymous";
+
 bgLayer.src = ROOT+"background.png";
 
 const headstockSelect=document.getElementById("headstockSelect");
@@ -634,7 +640,9 @@ return;
 
 const preview=document.querySelector(".preview");
 
-html2canvas(preview).then(canvas=>{
+html2canvas(preview,{
+useCORS:true
+}).then(canvas=>{
 
 const image=canvas.toDataURL("image/png");
 
