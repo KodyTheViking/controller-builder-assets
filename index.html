@@ -440,6 +440,22 @@ const config=MODELS[model.value];
 
 const preview=document.querySelector(".preview");
 
+const capture=document.createElement("div");
+capture.style.position="absolute";
+capture.style.left="-9999px";
+
+const base=baseLayer.cloneNode(true);
+const inlays=inlaysLayer.cloneNode(true);
+const pickguard=pickguardLayer.cloneNode(true);
+const hardware=hardwareLayer.cloneNode(true);
+
+capture.appendChild(base);
+capture.appendChild(inlays);
+capture.appendChild(pickguard);
+capture.appendChild(hardware);
+
+document.body.appendChild(capture);
+
 preview.className="preview";
 
 /* COSMIC COLOR ONLY FOR PALADIN */
