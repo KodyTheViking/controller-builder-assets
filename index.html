@@ -603,21 +603,18 @@ updateSummary();
 
 function updateSummary(){
 
-const config=MODELS[model.value];
+const config = MODELS[model.value];
 
-let baseColor=document.querySelector("#baseSwatches .active")?.dataset.color || "";
+let baseColor = document.querySelector("#baseSwatches .active")?.dataset.color || "";
+let style = document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "";
+let color = document.querySelector("#inlayColorSwatches .active")?.dataset.color || "";
+let pickguard = document.querySelector("#pickguardSwatches .active")?.dataset.color || "none";
+let headstock = headstockSelect.value || "";
 
-let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "";
+let modelName = MODEL_NAMES[model.value] || model.value;
 
-let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "";
-
-let pickguard=document.querySelector("#pickguardSwatches .active")?.dataset.color || "none";
-
-let headstock=headstockSelect.value || "";
-
-document.getElementById("summary").value=
-
-Model: ${MODEL_NAMES[model.value]}
+document.getElementById("summary").value =
+`Model: ${modelName}
 Headstock: ${headstock}
 Base: ${baseColor}
 Inlays: ${style} (${color})
