@@ -227,7 +227,6 @@ Total Price: <span id="price">$200</span>
 </div>
 
 <button onclick="resetBuilder()">Reset Build</button>
-<button onclick="shareBuild()">Share Build</button>
 
 <h3>Your Build</h3>
 
@@ -272,6 +271,17 @@ ranger:{folder:"ranger",price:200,pickguard:true,headstocks:null}
 
 };
 
+const MODEL_NAMES={
+
+barbarian:"Barbarian",
+bard:"Bard",
+doubleneck:"Bard (Double Neck)",
+necromancer:"Necromancer",
+paladin:"Paladin",
+ranger:"Ranger"
+
+};
+  
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink","cosmic"];
 
 const PICKGUARD_COLORS=[
@@ -607,7 +617,7 @@ let headstock=headstockSelect.value || "";
 
 document.getElementById("summary").value=
 
-`Model: ${model.value}
+Model: ${MODEL_NAMES[model.value]}
 Headstock: ${headstock}
 Base: ${baseColor}
 Inlays: ${style} (${color})
