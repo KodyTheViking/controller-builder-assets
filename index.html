@@ -641,47 +641,44 @@ location.reload();
 
 /* INIT */
 
-function function sendBuild(){
+function sendBuild(){
 
 const name=document.getElementById("customerName").value;
 const email=document.getElementById("customerEmail").value;
 const summary=document.getElementById("summary").value;
 
 if(!name || !email){
-
 alert("Please enter your name and email.");
-
 return;
+}
 
+if(!window.emailjs){
+alert("Email service unavailable.");
+return;
 }
 
 const params={
-
 customer_name:name,
 customer_email:email,
 build_summary:summary
-
 };
 
 emailjs.send(
-"service_c6jo9as",
+"service_qqo7ge9",
 "template_qyrwwom",
 params
 )
 
 .then(()=>{
-
 alert("Your build has been sent!");
-
 })
 
 .catch((error)=>{
-
-console.log("EmailJS Error:", error);
-
+console.log("EmailJS Error:",error);
 alert("Error sending build.");
-
 });
+
+}
 
 }
 model.onchange();
