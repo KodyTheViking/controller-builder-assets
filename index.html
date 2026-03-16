@@ -642,7 +642,7 @@ location.reload();
 
 /* INIT */
 
-function sendBuild(){
+function function sendBuild(){
 
 const name=document.getElementById("customerName").value;
 const email=document.getElementById("customerEmail").value;
@@ -656,30 +656,16 @@ return;
 
 }
 
-const preview=document.querySelector(".preview");
-
-html2canvas(preview,{
-useCORS:true,
-scale:0.4
-}).then(canvas=>{
-
-document.body.removeChild(capture);
-
-const image = canvas.toDataURL("image/jpeg",0.6);
-
-const image=canvas.toDataURL("image/png");
-
 const params={
 
 customer_name:name,
 customer_email:email,
-build_summary:summary,
-build_image:image
+build_summary:summary
 
 };
 
 emailjs.send(
-"service_qqo7ge9",
+"service_c6jo9as",
 "template_qyrwwom",
 params
 )
@@ -691,9 +677,10 @@ alert("Your build has been sent!");
 })
 
 .catch((error)=>{
+
 console.log("EmailJS Error:", error);
-alert("Error sending build. Check console.");
-});
+
+alert("Error sending build.");
 
 });
 
