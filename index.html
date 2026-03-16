@@ -166,6 +166,10 @@ width:100%;
 
 }
 
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
 </style>
 
 </head>
@@ -230,11 +234,22 @@ Total Price: <span id="price">$200</span>
 
 <textarea id="summary" readonly></textarea>
 
+<h3>Send Your Build</h3>
+
+<input id="customerName" placeholder="Your Name" style="width:100%;padding:8px;margin-top:5px;">
+<input id="customerEmail" placeholder="Your Email" style="width:100%;padding:8px;margin-top:5px;">
+
+<button onclick="sendBuild()">Send Build</button>
+
 </div>
 
 </div>
 
 <script>
+
+(function(){
+emailjs.init(AH9IAg7CHTj9tSwG4);
+})();
 
 const ROOT="https://kodytheviking.github.io/controller-builder-assets/";
 
@@ -603,6 +618,56 @@ location.reload();
 
 /* INIT */
 
+function sendBuild(){
+
+const name=document.getElementById("customerName").value;
+const email=document.getElementById("customerEmail").value;
+const summary=document.getElementById("summary").value;
+
+if(!name || !email){
+
+alert("Please enter your name and email.");
+
+return;
+
+}
+
+const preview=document.querySelector(".preview");
+
+html2canvas(preview).then(canvas=>{
+
+const image=canvas.toDataURL("image/png");
+
+const params={
+
+customer_name:name,
+customer_email:email,
+build_summary:summary,
+build_image:image
+
+};
+
+emailjs.send(
+"service_qqo7ge9",
+"template_qyrwwom",
+params
+)
+
+.then(()=>{
+
+alert("Your build has been sent!");
+
+})
+
+.catch(()=>{
+
+alert("Error sending build. Please try again.");
+
+});
+
+});
+
+}
 model.onchange();
 
 </script>
