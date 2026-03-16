@@ -669,10 +669,9 @@ alert("Your build has been sent!");
 
 })
 
-.catch(()=>{
-
-alert("Error sending build. Please try again.");
-
+.catch((error)=>{
+console.log("EmailJS Error:", error);
+alert("Error sending build. Check console.");
 });
 
 });
