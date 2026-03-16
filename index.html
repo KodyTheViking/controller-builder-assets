@@ -643,7 +643,8 @@ return;
 const preview=document.querySelector(".preview");
 
 html2canvas(preview,{
-useCORS:true
+useCORS:true,
+scale:0.5
 }).then(canvas=>{
 
 const image=canvas.toDataURL("image/png");
