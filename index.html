@@ -60,6 +60,12 @@ pointer-events:none;
 image-rendering:auto;
 }
 
+.preview-column{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
 /* small correction for double neck */
 
 .preview.double-neck #inlays{
@@ -127,6 +133,16 @@ background-size:contain;
 background-repeat:no-repeat;
 background-position:center;
 transition:all .2s ease;
+}
+
+.swatch.none{
+background:#222;
+border:2px dashed #777;
+}
+
+.swatch.none:hover{
+border-color:#aaa;
+box-shadow:0 0 6px rgba(255,255,255,0.25);
 }
 
 /* hover glow */
@@ -228,6 +244,8 @@ width:100%;
 <body>
 
 <div class="container">
+
+<div class="preview-column">
 
 <div class="preview">
 
@@ -455,8 +473,7 @@ sw.className="swatch";
 
 if(color==="none"){
 
-sw.style.background="#222";
-sw.style.border="2px dashed #777";
+sw.classList.add("none");
 
 }else{
 
@@ -488,16 +505,16 @@ let sw=document.createElement("div");
 
 sw.className="swatch";
 
-if(pg==="none"){
+if(color==="none"){
 
-sw.style.background="#222";
-sw.style.border="2px dashed #777";
+sw.classList.add("none");
 
 }else{
 
-sw.style.background=pg;
+sw.style.background=color;
 
 }
+  
 sw.dataset.color=pg;
 
 sw.onclick=()=>{
