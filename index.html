@@ -37,7 +37,6 @@ max-width:900px;
 margin:auto;
 display:flex;
 gap:30px;
-justify-content:center;
 align-items:flex-start;
 }
 
@@ -46,10 +45,10 @@ align-self:start;
 }
 
 .left-column{
+width:380px;
 display:flex;
 flex-direction:column;
 gap:10px;
-width:380px
 }
 
 /* PREVIEW */
@@ -253,19 +252,18 @@ width:100%;
 
 <div class="container">
 
-<div class="left-column">
+  <div class="left-column">
 
-<div class="preview">
+    <div class="preview">
+      <img id="bg" style="position:relative;">
+      <img id="base">
+      <img id="inlays">
+      <img id="pickguard">
+      <img id="hardware">
 
-<img id="bg" style="position:relative;">
-<img id="base">
-<img id="inlays">
-<img id="pickguard">
-<img id="hardware">
+    </div>
 
-</div>
-
-<div class="builder-info">
+  <div class="builder-info">
 
 <h3>How to Use the Builder</h3>
 
