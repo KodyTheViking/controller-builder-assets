@@ -35,16 +35,20 @@ padding:20px;
 .container{
 max-width:900px;
 margin:auto;
-display:grid;
-grid-template-columns:380px 360px;
-grid-template-rows:auto auto;
-gap:20px 30px;
+display:flex;
+gap:30px;
 justify-content:center;
-align-items:start;
+align-items:flex-start;
 }
 
 .container > div{
 align-self:start;
+}
+
+.left-column{
+display:flex;
+flex-direction:column;
+gap:10px;
 }
 
 /* PREVIEW */
@@ -247,6 +251,8 @@ width:100%;
 <body>
 
 <div class="container">
+
+<div class="left-column">
 
 <div class="preview">
 
