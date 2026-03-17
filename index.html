@@ -120,12 +120,27 @@ margin-top:10px;
 .swatch{
 width:32px;
 height:32px;
-border-radius:4px;
+border-radius:6px;
 cursor:pointer;
 border:2px solid transparent;
 background-size:contain;
 background-repeat:no-repeat;
 background-position:center;
+transition:all .2s ease;
+}
+
+/* hover glow */
+
+.swatch:hover{
+transform:scale(1.08);
+box-shadow:0 0 6px rgba(255,255,255,0.35);
+}
+
+/* active selection */
+
+.swatch.active{
+border:2px solid white;
+box-shadow:0 0 8px rgba(255,255,255,0.6);
 }
 
 .swatch.active{
