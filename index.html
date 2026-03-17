@@ -47,9 +47,10 @@ align-items:start;
 .preview{
 position:relative;
 width:380px;
-margin:0;
+height:214px; /* IMPORTANT */
 grid-column:1;
 grid-row:1;
+overflow:hidden;
 }
 
 .preview{
@@ -63,9 +64,8 @@ left:0;
 width:100%;
 height:auto;
 pointer-events:none;
-image-rendering:auto;
 }
-
+  
 /* small correction for double neck */
 
 .preview.double-neck #inlays{
