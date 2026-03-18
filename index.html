@@ -260,83 +260,84 @@ width:100%;
       <img id="inlays">
       <img id="pickguard">
       <img id="hardware">
+    </div>
+
+    <div class="builder-info">
+
+      <h3>How to Use the Builder</h3>
+
+      <p>
+      1. Select your controller model.<br>
+      2. Choose a headstock style if available.<br>
+      3. Pick your base color, inlay style, and pickguard color.<br>
+      4. When finished, enter your name and email and click <b>Send Build</b>.
+      </p>
+
+      <p>
+      <strong>Important:</strong> Use the same name and email when placing your order on the store so we can match your build configuration.
+      </p>
+
+      <p>
+      Colors shown in the builder are digital previews and may vary slightly from the final product.
+      </p>
 
     </div>
 
-  <div class="builder-info">
+  </div> <!-- ✅ CLOSE LEFT COLUMN HERE -->
 
-<h3>How to Use the Builder</h3>
+  <div class="controls">
 
-<p>
-1. Select your controller model.<br>
-2. Choose a headstock style if available.<br>
-3. Pick your base color, inlay style, and pickguard color.<br>
-4. When finished, enter your name and email and click <b>Send Build</b>.
-</p>
+    <h1>Custom Guitar Controller Builder</h1>
 
-<p>
-<strong>Important:</strong> Use the same name and email when placing your order on the store so we can match your build configuration.
-</p>
+    <label>Controller Model</label>
 
-<p>
-Colors shown in the builder are digital previews and may vary slightly from the final product.
-</p>
+    <select id="model">
+      <option value="barbarian">Barbarian</option>
+      <option value="bard">Bard</option>
+      <option value="doubleneck">Bard (Double Neck)</option>
+      <option value="necromancer">Necromancer</option>
+      <option value="paladin">Paladin</option>
+      <option value="ranger">Ranger</option>
+    </select>
 
-</div>
+    <div id="headstockSection">
 
-<div class="controls">
+      <h3>Headstock</h3>
 
-<h1>Custom Guitar Controller Builder</h1>
+      <select id="headstockSelect"></select>
 
-<label>Controller Model</label>
+    </div>
 
-<select id="model">
-<option value="barbarian">Barbarian</option>
-<option value="bard">Bard</option>
-<option value="doubleneck">Bard (Double Neck)</option>
-<option value="necromancer">Necromancer</option>
-<option value="paladin">Paladin</option>
-<option value="ranger">Ranger</option>
-</select>
+    <h3>Base Color</h3>
+    <div id="baseSwatches" class="swatches"></div>
 
-<div id="headstockSection">
+    <h3>Inlay Style</h3>
+    <div id="inlayStyleSwatches" class="swatches"></div>
 
-<h3>Headstock</h3>
+    <h3>Inlay Color</h3>
+    <div id="inlayColorSwatches" class="swatches"></div>
 
-<select id="headstockSelect"></select>
+    <h3>Pickguard</h3>
+    <div id="pickguardSwatches" class="swatches"></div>
 
-</div>
+    <div class="price">
+      Total Price: <span id="price">$200</span>
+    </div>
 
-<h3>Base Color</h3>
-<div id="baseSwatches" class="swatches"></div>
+    <button onclick="resetBuilder()">Reset Build</button>
 
-<h3>Inlay Style</h3>
-<div id="inlayStyleSwatches" class="swatches"></div>
+    <h3>Your Build</h3>
 
-<h3>Inlay Color</h3>
-<div id="inlayColorSwatches" class="swatches"></div>
+    <textarea id="summary" readonly></textarea>
 
-<h3>Pickguard</h3>
-<div id="pickguardSwatches" class="swatches"></div>
+    <h3>Send Your Build</h3>
 
-<div class="price">
-Total Price: <span id="price">$200</span>
-</div>
+    <input id="customerName" placeholder="Your Name" style="width:100%;padding:8px;margin-top:5px;">
+    <input id="customerEmail" placeholder="Your Email" style="width:100%;padding:8px;margin-top:5px;">
 
-<button onclick="resetBuilder()">Reset Build</button>
+    <button onclick="sendBuild()">Send Build</button>
 
-<h3>Your Build</h3>
-
-<textarea id="summary" readonly></textarea>
-
-<h3>Send Your Build</h3>
-
-<input id="customerName" placeholder="Your Name" style="width:100%;padding:8px;margin-top:5px;">
-<input id="customerEmail" placeholder="Your Email" style="width:100%;padding:8px;margin-top:5px;">
-
-<button onclick="sendBuild()">Send Build</button>
-
-</div>
+  </div>
 
 </div>
 
