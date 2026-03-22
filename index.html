@@ -771,11 +771,18 @@ customer_email:email,
 build_summary:summary
 };
 
-emailjs.send(
-"service_qqo7ge9",
-"template_qyrwwom",
-params
-)
+// 1️⃣ Send to YOU
+emailjs.send("service_qqo7ge9", "template_qyrwwom", params)
+
+// 2️⃣ Send auto-reply to CUSTOMER
+emailjs.send("service_qqo7ge9", "template_autoreply", params)
+.then(()=>{
+  alert("Your build has been submitted! Check your email 👍");
+})
+.catch((error)=>{
+  console.log("EmailJS Error:", error);
+  alert("Error sending build.");
+});
 
 .then(()=>{
 alert("Your build has been sent!");
