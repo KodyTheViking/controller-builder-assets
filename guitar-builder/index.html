@@ -623,30 +623,65 @@ function playCasketAnimation(updateCallback){
 /* MODEL CHANGE */
 console.log("MODEL CHANGED");
 
-model.onchange=()=>{
+model.onchange = () => {
 
-  playCasketAnimation(()=>{
+  playCasketAnimation(() => {
 
-const config=MODELS[model.value];
-const preview=document.querySelector(".preview");
+    // ALL your existing code goes here
 
-preview.className="preview";
+    const config = MODELS[model.value];
+    const preview = document.querySelector(".preview");
 
-/* COSMIC COLOR ONLY FOR PALADIN */
+    preview.className = "preview";
 
-document.querySelectorAll("#baseSwatches .swatch").forEach(sw=>{
+    document.querySelectorAll("#baseSwatches .swatch").forEach(sw => {
+      if(sw.dataset.color === "cosmic"){
+        sw.style.display = (model.value === "paladin") ? "inline-block" : "none";
+      }
+    });
 
-if(sw.dataset.color==="cosmic"){
+    if(model.value === "doubleneck"){
+      preview.classList.add("double-neck");
+    }
 
-if(model.value==="paladin"){
-sw.style.display="inline-block";
-}else{
-sw.style.display="none";
-}
+    hardwareLayer.src = ROOT + config.folder + "/hardware.png";
+    document.getElementById("price").innerText = "$" + config.price;
 
-}
+    if(config.pickguard){
+      pickguardContainer.style.display = "flex";
+      pickguardLayer.src = ROOT + config.folder + "/pickguards/black.png";
+    } else {
+      pickguardContainer.style.display = "none";
+      pickguardLayer.src = "";
+    }
 
-});
+    if(config.headstocks){
+
+      headstockSection.style.display = "block";
+      headstockSelect.innerHTML = "";
+
+      config.headstocks.forEach(h => {
+        let o = document.createElement("option");
+        o.value = h;
+
+        if(h === "r") o.text = "Standard";
+        else if(h === "l") o.text = "Reverse";
+        else if(h === "3x3") o.text = "3x3";
+        else if(h === "6") o.text = "6 in line";
+
+        headstockSelect.appendChild(o);
+      });
+
+    } else {
+      headstockSection.style.display = "none";
+    }
+
+    updateBase();
+    updateInlays();
+
+  });
+
+};
 
 if(model.value==="doubleneck"){
 preview.classList.add("double-neck");
@@ -701,7 +736,7 @@ headstockSection.style.display="none";
 updateBase();
 updateInlays();
 
-});
+}
 
 /* BASE IMAGE */
 
