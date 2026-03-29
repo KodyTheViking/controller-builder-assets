@@ -83,7 +83,37 @@ pointer-events:none;
 .preview.double-neck #inlays{
 transform:translateX(3px);
 }
-  
+
+/* enable 3D perspective */
+.preview{
+  perspective: 1200px;
+}
+
+/* casket lid layer */
+#casketLid{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:auto;
+  z-index:10;
+
+  transform-origin: top center;
+  transform: rotateX(-110deg); /* starts OPEN */
+
+  transition: transform 0.6s cubic-bezier(.65,.05,.36,1);
+  pointer-events:none;
+}
+
+/* states */
+.lid-open{
+  transform: rotateX(-110deg);
+}
+
+.lid-closed{
+  transform: rotateX(0deg);
+}
+
 /* LAYER ORDER */
 
 #bg{z-index:1;}
