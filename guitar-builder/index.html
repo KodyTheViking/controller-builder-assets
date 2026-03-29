@@ -599,34 +599,10 @@ pickguardContainer.appendChild(sw);
 
 });
 
-function playCasketAnimation(updateCallback){
-
-  const lid = document.getElementById("casketLid");
-
-  // CLOSE
-  lid.classList.remove("lid-open");
-  lid.classList.add("lid-closed");
-
-  // wait for close animation
-  setTimeout(()=>{
-
-    if(updateCallback) updateCallback();
-
-    // OPEN
-    setTimeout(()=>{
-      lid.classList.remove("lid-closed");
-      lid.classList.add("lid-open");
-    },100);
-
-  },600);
-}
-
 /* MODEL CHANGE */
 console.log("MODEL CHANGED");
 
 model.onchange=()=>{
-
-  playCasketAnimation(()=>{
 
 const config=MODELS[model.value];
 const preview=document.querySelector(".preview");
