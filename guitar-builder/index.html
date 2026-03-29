@@ -410,7 +410,8 @@ const INLAY_COLORS=[
 "black","white","red","orange","yellow","green","blue","purple","pink","none"
 ];
 
-const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite"];
+const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite","none"
+];
 
 
 /* DOM */
@@ -468,25 +469,29 @@ baseContainer.appendChild(sw);
 
 INLAYS.forEach(style=>{
 
-let sw=document.createElement("div");
+  let sw=document.createElement("div");
+  sw.className="swatch";
+  sw.dataset.style=style;
 
-sw.className="swatch";
+  if(style==="none"){
+    sw.style.background="#222";
+    sw.style.border="2px dashed #777";
+  }else{
+    sw.style.backgroundImage=`url(${ROOT}inlay-thumbs/${style}.png)`;
+  }
 
-sw.style.backgroundImage=`url(${ROOT}inlay-thumbs/${style}.png)`;
+  sw.onclick=()=>{
 
-sw.dataset.style=style;
+    document.querySelectorAll("#inlayStyleSwatches .swatch")
+      .forEach(s=>s.classList.remove("active"));
 
-sw.onclick=()=>{
+    sw.classList.add("active");
 
-document.querySelectorAll("#inlayStyleSwatches .swatch").forEach(s=>s.classList.remove("active"));
+    updateInlays();
 
-sw.classList.add("active");
+  };
 
-updateInlays();
-
-};
-
-inlayStyleContainer.appendChild(sw);
+  inlayStyleContainer.appendChild(sw);
 
 });
 
@@ -685,21 +690,23 @@ updateSummary();
 
 function updateInlays(){
 
-let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
+  let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
+  let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "none";
 
-let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "none";
+  let folder="inlays";
 
-let folder="inlays";
+  if(model.value==="doubleneck"){
+    folder="double-neck inlays";
+  }
 
-if(model.value==="doubleneck"){folder="double-neck inlays";}
+  // 🚫 if either is none → remove inlays
+  if(style==="none" || color==="none"){
+    inlaysLayer.src="";
+  }else{
+    inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
+  }
 
-if(color==="none"){
-inlaysLayer.src="";
-}else{
-inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
-}
-
-updateSummary();
+  updateSummary();
 
 }
 
