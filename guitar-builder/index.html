@@ -11,7 +11,7 @@
 
 @font-face{
 font-family: 'BlackCastle';
-src: url('https://kodytheviking.github.io/controller-builder-assets/guitar-builder/fonts/black-castle.ttf') format('truetype');
+src: url('https://kodytheviking.github.io/controller-builder-assets/fonts/black-castle.ttf') format('truetype');
 font-weight: normal;
 font-style: normal;
 }
@@ -83,37 +83,7 @@ pointer-events:none;
 .preview.double-neck #inlays{
 transform:translateX(3px);
 }
-
-/* enable 3D perspective */
-.preview{
-  perspective: 1200px;
-}
-
-/* casket lid layer */
-#casketLid{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:auto;
-  z-index:10;
-
-  transform-origin: left center; /* 👈 hinge on left side */
-  transform: rotateY(-110deg);   /* 👈 starts open */
-
-  transition: transform 0.6s cubic-bezier(.65,.05,.36,1);
-  pointer-events:none;
-}
-
-/* states */
-.lid-open{
-  transform: rotateY(-110deg);
-}
-
-.lid-closed{
-  transform: rotateY(0deg);
-}
-
+  
 /* LAYER ORDER */
 
 #bg{z-index:1;}
@@ -229,6 +199,34 @@ violet
 );
 }
 
+/* CASKET ANIMATION */
+
+.preview{
+  perspective:1400px;
+}
+
+#casketLid{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:auto;
+  z-index:10;
+
+  transform-origin:left center;
+
+  transition:transform 0.6s cubic-bezier(.65,.05,.36,1);
+  pointer-events:none;
+}
+
+.lid-open{
+  transform:rotateY(-110deg);
+}
+
+.lid-closed{
+  transform:rotateY(0deg);
+}
+  
 /* SUMMARY */
 
 textarea{
@@ -303,16 +301,19 @@ width:100%;
 
   <div class="left-column">
 
-    <div class="preview">
-      <img id="bg" style="position:relative;">
-      <img id="base">
-      <img id="inlays">
-      <img id="pickguard">
-      <img id="hardware">
-      <img id="casketLid">
-   </div>
+<div class="preview">
+  <img id="bg" style="position:relative;">
+  <img id="base">
+  <img id="inlays">
+  <img id="pickguard">
+  <img id="hardware">
 
-   <audio id="casketSound" src="https://kodytheviking.github.io/controller-builder-assets/guitar-builder/casket/close.mp3"></audio>
+  <!-- CASKET LID -->
+  <img id="casketLid">
+</div>
+
+<!-- SOUND -->
+<audio id="casketSound" src="https://kodytheviking.github.io/controller-builder-assets/guitar-builder/casket/close.mp3"></audio>
 
     <div class="builder-info">
 
@@ -443,8 +444,7 @@ const INLAY_COLORS=[
 "black","white","red","orange","yellow","green","blue","purple","pink","none"
 ];
 
-const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite","none"
-];
+const INLAYS=["blocks","dots","hate","onesided","piranhabite","sawtooth","sharkbite"];
 
 
 /* DOM */
@@ -464,7 +464,12 @@ bgLayer.crossOrigin="anonymous";
 
 bgLayer.src = ROOT+"background.png";
 const lid = document.getElementById("casketLid");
+const sound = document.getElementById("casketSound");
+
 lid.src = ROOT + "casket/lid.png";
+
+/* start open */
+lid.classList.add("lid-open");
 
 const headstockSelect=document.getElementById("headstockSelect");
 const headstockSection=document.getElementById("headstockSection");
@@ -504,29 +509,25 @@ baseContainer.appendChild(sw);
 
 INLAYS.forEach(style=>{
 
-  let sw=document.createElement("div");
-  sw.className="swatch";
-  sw.dataset.style=style;
+let sw=document.createElement("div");
 
-  if(style==="none"){
-    sw.style.background="#222";
-    sw.style.border="2px dashed #777";
-  }else{
-    sw.style.backgroundImage=`url(${ROOT}inlay-thumbs/${style}.png)`;
-  }
+sw.className="swatch";
 
-  sw.onclick=()=>{
+sw.style.backgroundImage=`url(${ROOT}inlay-thumbs/${style}.png)`;
 
-    document.querySelectorAll("#inlayStyleSwatches .swatch")
-      .forEach(s=>s.classList.remove("active"));
+sw.dataset.style=style;
 
-    sw.classList.add("active");
+sw.onclick=()=>{
 
-    updateInlays();
+document.querySelectorAll("#inlayStyleSwatches .swatch").forEach(s=>s.classList.remove("active"));
 
-  };
+sw.classList.add("active");
 
-  inlayStyleContainer.appendChild(sw);
+updateInlays();
+
+};
+
+inlayStyleContainer.appendChild(sw);
 
 });
 
@@ -599,31 +600,91 @@ pickguardContainer.appendChild(sw);
 
 });
 
+
+function playCasketAnimation(updateCallback){
+
+  if(sound){
+    sound.currentTime = 0;
+    sound.play().catch(()=>{});
+  }
+
+  // CLOSE
+  lid.classList.remove("lid-open");
+  lid.classList.add("lid-closed");
+
+  setTimeout(()=>{
+
+    if(updateCallback) updateCallback();
+
+    // OPEN
+    setTimeout(()=>{
+      lid.classList.remove("lid-closed");
+      lid.classList.add("lid-open");
+    },120);
+
+  },600);
+}
+  
 /* MODEL CHANGE */
-console.log("MODEL CHANGED");
 
-model.onchange=()=>{
+model.onchange = ()=>{
 
-const config=MODELS[model.value];
-const preview=document.querySelector(".preview");
+  playCasketAnimation(()=>{
 
-preview.className="preview";
+    const config=MODELS[model.value];
+    const preview=document.querySelector(".preview");
 
-/* COSMIC COLOR ONLY FOR PALADIN */
+    preview.className="preview";
 
-document.querySelectorAll("#baseSwatches .swatch").forEach(sw=>{
+    document.querySelectorAll("#baseSwatches .swatch").forEach(sw=>{
+      if(sw.dataset.color==="cosmic"){
+        sw.style.display = (model.value==="paladin") ? "inline-block" : "none";
+      }
+    });
 
-if(sw.dataset.color==="cosmic"){
+    if(model.value==="doubleneck"){
+      preview.classList.add("double-neck");
+    }
 
-if(model.value==="paladin"){
-sw.style.display="inline-block";
-}else{
-sw.style.display="none";
-}
+    hardwareLayer.src=ROOT+config.folder+"/hardware.png";
 
-}
+    document.getElementById("price").innerText="$"+config.price;
 
-});
+    if(config.pickguard){
+      pickguardContainer.style.display="flex";
+      pickguardLayer.src=ROOT+config.folder+"/pickguards/black.png";
+    }else{
+      pickguardContainer.style.display="none";
+      pickguardLayer.src="";
+    }
+
+    if(config.headstocks){
+
+      headstockSection.style.display="block";
+      headstockSelect.innerHTML="";
+
+      config.headstocks.forEach(h=>{
+        let o=document.createElement("option");
+        o.value=h;
+
+        if(h==="r") o.text="Standard";
+        else if(h==="l") o.text="Reverse";
+        else if(h==="3x3") o.text="3x3";
+        else if(h==="6") o.text="6 in line";
+
+        headstockSelect.appendChild(o);
+      });
+
+    }else{
+      headstockSection.style.display="none";
+    }
+
+    updateBase();
+    updateInlays();
+
+  });
+
+};
 
 if(model.value==="doubleneck"){
 preview.classList.add("double-neck");
@@ -726,23 +787,21 @@ updateSummary();
 
 function updateInlays(){
 
-  let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
-  let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "none";
+let style=document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "blocks";
 
-  let folder="inlays";
+let color=document.querySelector("#inlayColorSwatches .active")?.dataset.color || "none";
 
-  if(model.value==="doubleneck"){
-    folder="double-neck inlays";
-  }
+let folder="inlays";
 
-  // 🚫 if either is none → remove inlays
-  if(style==="none" || color==="none"){
-    inlaysLayer.src="";
-  }else{
-    inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
-  }
+if(model.value==="doubleneck"){folder="double-neck inlays";}
 
-  updateSummary();
+if(color==="none"){
+inlaysLayer.src="";
+}else{
+inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
+}
+
+updateSummary();
 
 }
 
