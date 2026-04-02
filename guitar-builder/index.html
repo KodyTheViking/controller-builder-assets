@@ -288,6 +288,32 @@ margin:0;
 width:100%;
 }
 
+#casketFog{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:auto;
+
+  z-index:8; /* below lid, above guitar */
+
+  opacity:0;
+  pointer-events:none;
+
+  transform:scale(0.95);
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.6s ease;
+
+  filter: blur(10px);
+}
+
+.fog-active{
+  opacity:0.6;
+  transform:scale(1.05);
+}
+  
 }
 
 
@@ -308,7 +334,10 @@ width:100%;
   <img id="pickguard">
   <img id="hardware">
 
-  <!-- CASKET LID -->
+  <!-- FOG -->
+  <img id="casketFog">
+
+  <!-- LID -->
   <img id="casketLid">
 </div>
 
@@ -465,6 +494,8 @@ bgLayer.crossOrigin="anonymous";
 bgLayer.src = ROOT+"background.png";
 const lid = document.getElementById("casketLid");
 const sound = document.getElementById("casketSound");
+const fog = document.getElementById("casketFog");
+fog.src = ROOT + "casket/fog.png";
 
 lid.src = ROOT + "casket/lid.png";
 
@@ -738,6 +769,18 @@ headstockSection.style.display="none";
 updateBase();
 updateInlays();
 
+function triggerFog(){
+
+  if(!fog) return;
+
+  fog.classList.add("fog-active");
+
+  setTimeout(()=>{
+    fog.classList.remove("fog-active");
+  },400);
+
+}
+  
 /* BASE IMAGE */
 
 function updateBase(){
@@ -776,6 +819,8 @@ if(model.value==="paladin" && color==="cosmic"){file="base-cosmic";}
 
 baseLayer.src=ROOT+config.folder+"/base/"+file+".png";
 
+triggerFog();
+
 updateSummary();
 
 }
@@ -798,6 +843,8 @@ inlaysLayer.src="";
 inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
 }
 
+triggerFog();
+
 updateSummary();
 
 }
@@ -811,6 +858,8 @@ const config=MODELS[model.value];
 let color=document.querySelector("#pickguardSwatches .active")?.dataset.color || "black";
 
 pickguardLayer.src=ROOT+config.folder+"/pickguards/"+color+".png";
+
+triggerFog();
 
 updateSummary();
 
