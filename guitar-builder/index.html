@@ -299,7 +299,7 @@ width:100%;
 
   z-index:6;
 
-  opacity:0;
+  opacity:0;   /* 👈 MUST start hidden */
   pointer-events:none;
 
   transform:scale(0.95);
@@ -309,6 +309,11 @@ width:100%;
     transform 0.6s ease;
 
   filter: blur(10px);
+}
+
+.fog-active{
+  opacity:0.6;
+  transform:scale(1.05);
 }
 
 .fog-active{
