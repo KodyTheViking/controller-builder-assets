@@ -784,21 +784,55 @@ function triggerFog(){
   // reset instantly
   fog.style.transition = "none";
   fog.style.opacity = "0";
+  fog.style.transform = "scale(0.9)";
+
+  fog.offsetHeight; // force reflow
+
+  // PHASE 1 — swell in
+  fog.style.transition = "opacity 0.35s ease, transform 0.5s ease";
+  fog.style.opacity = "0.7";
+  fog.style.transform = "scale(1.1)";
+
+  // PHASE 2 — linger at peak
+  setTimeout(()=>{
+
+    fog.style.transition = "opacity 0.5s ease, transform 0.6s ease";
+    fog.style.opacity = "0";
+    fog.style.transform = "scale(1.15)";
+
+  },450); // 👈 linger time
+
+}
+
+function initialFogPulse(){
+
+  if(!fog) return;
+
+  // start slightly visible
+  fog.style.opacity = "0.3";
   fog.style.transform = "scale(0.95)";
 
-  // force reflow (important)
-  fog.offsetHeight;
+  let pulses = 0;
 
-  // animate
-  fog.style.transition = "opacity 0.4s ease, transform 0.6s ease";
-  fog.style.opacity = "0.6";
-  fog.style.transform = "scale(1.05)";
+  const pulseInterval = setInterval(()=>{
 
-  // fade out
-  setTimeout(()=>{
-    fog.style.opacity = "0";
-    fog.style.transform = "scale(0.95)";
-  },400);
+    fog.style.transition = "opacity 0.8s ease, transform 1s ease";
+
+    fog.style.opacity = pulses % 2 === 0 ? "0.6" : "0.2";
+    fog.style.transform = pulses % 2 === 0 ? "scale(1.05)" : "scale(0.95)";
+
+    pulses++;
+
+    if(pulses >= 4){ // number of pulses
+      clearInterval(pulseInterval);
+
+      // fade out cleanly
+      setTimeout(()=>{
+        fog.style.opacity = "0";
+      },500);
+    }
+
+  },800);
 
 }
   
@@ -957,6 +991,10 @@ alert("Error sending build.");
 
 }
 
+window.addEventListener("load", ()=>{
+  initialFogPulse();
+});
+  
 model.onchange();
 
 </script>
