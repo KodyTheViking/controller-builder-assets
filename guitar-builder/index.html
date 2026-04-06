@@ -513,6 +513,11 @@ const pickguardContainer=document.getElementById("pickguardSwatches");
 const inlayStyleContainer=document.getElementById("inlayStyleSwatches");
 const inlayColorContainer=document.getElementById("inlayColorSwatches");
 
+headstockSelect.onchange = () => {
+  updateBase();   // refresh base image
+  triggerFog();   // 👈 also trigger fog
+};
+  
 /* BASE COLOR SWATCHES */
 
 COLORS.forEach(color=>{
