@@ -808,31 +808,44 @@ function initialFogPulse(){
 
   if(!fog) return;
 
-  // start slightly visible
-  fog.style.opacity = "0.3";
-  fog.style.transform = "scale(0.95)";
+  // FORCE starting state
+  fog.style.transition = "none";
+  fog.style.opacity = "0";
+  fog.style.transform = "scale(0.9)";
 
-  let pulses = 0;
+  fog.offsetHeight;
 
-  const pulseInterval = setInterval(()=>{
+  // slight delay so page is visible first
+  setTimeout(()=>{
 
-    fog.style.transition = "opacity 0.8s ease, transform 1s ease";
+    let pulses = 0;
 
-    fog.style.opacity = pulses % 2 === 0 ? "0.6" : "0.2";
-    fog.style.transform = pulses % 2 === 0 ? "scale(1.05)" : "scale(0.95)";
+    const pulseInterval = setInterval(()=>{
 
-    pulses++;
+      fog.style.transition = "opacity 1s ease, transform 1.2s ease";
 
-    if(pulses >= 4){ // number of pulses
-      clearInterval(pulseInterval);
+      if(pulses % 2 === 0){
+        fog.style.opacity = "0.7";
+        fog.style.transform = "scale(1.05)";
+      } else {
+        fog.style.opacity = "0.2";
+        fog.style.transform = "scale(0.95)";
+      }
 
-      // fade out cleanly
-      setTimeout(()=>{
-        fog.style.opacity = "0";
-      },500);
-    }
+      pulses++;
 
-  },800);
+      if(pulses >= 4){
+        clearInterval(pulseInterval);
+
+        // fade out completely
+        setTimeout(()=>{
+          fog.style.opacity = "0";
+        },600);
+      }
+
+    },1000);
+
+  },300); // 👈 delay so it actually shows
 
 }
   
