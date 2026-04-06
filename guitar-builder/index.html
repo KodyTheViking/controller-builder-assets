@@ -776,12 +776,24 @@ function triggerFog(){
 
   if(!fog) return;
 
-  fog.classList.add("fog-active");
+  // reset instantly
+  fog.style.transition = "none";
+  fog.style.opacity = "0";
+  fog.style.transform = "scale(0.95)";
 
+  // force reflow (important)
+  fog.offsetHeight;
+
+  // animate
+  fog.style.transition = "opacity 0.4s ease, transform 0.6s ease";
+  fog.style.opacity = "0.6";
+  fog.style.transform = "scale(1.05)";
+
+  // fade out
   setTimeout(()=>{
-    fog.classList.remove("fog-active");
+    fog.style.opacity = "0";
+    fog.style.transform = "scale(0.95)";
   },400);
-  console.log("FOG TRIGGERED");
 
 }
   
