@@ -996,6 +996,17 @@ window.addEventListener("load", ()=>{
   initialFogPulse();
 });
   
+window.addEventListener("load", ()=>{
+
+  const loader = document.getElementById("loadingScreen");
+
+  // keep screen visible for cinematic effect
+  setTimeout(()=>{
+    loader.classList.add("hidden");
+  },3500);
+
+});
+
 model.onchange();
 
 </script>
