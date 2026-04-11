@@ -315,11 +315,6 @@ width:100%;
   opacity:0.6;
   transform:scale(1.05);
 }
-
-.fog-active{
-  opacity:0.6;
-  transform:scale(1.05);
-}
   
 }
 
@@ -732,58 +727,7 @@ model.onchange = () => {
 
 };
 
-if(model.value==="doubleneck"){
-preview.classList.add("double-neck");
-}
 
-hardwareLayer.src=ROOT+config.folder+"/hardware.png";
-
-document.getElementById("price").innerText="$"+config.price;
-
-/* PICKGUARD */
-
-if(config.pickguard){
-
-pickguardContainer.style.display="flex";
-pickguardLayer.src=ROOT+config.folder+"/pickguards/black.png";
-
-}else{
-
-pickguardContainer.style.display="none";
-pickguardLayer.src="";
-
-}
-
-/* HEADSTOCK */
-
-if(config.headstocks){
-
-headstockSection.style.display="block";
-headstockSelect.innerHTML="";
-
-config.headstocks.forEach(h=>{
-
-let o=document.createElement("option");
-
-o.value=h;
-
-if(h==="r") o.text="Standard";
-else if(h==="l") o.text="Reverse";
-else if(h==="3x3") o.text="3x3";
-else if(h==="6") o.text="6 in line";
-
-headstockSelect.appendChild(o);
-
-});
-
-}else{
-
-headstockSection.style.display="none";
-
-}
-
-updateBase();
-updateInlays();
 
 function triggerFog(){
 
