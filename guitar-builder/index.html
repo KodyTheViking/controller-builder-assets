@@ -732,26 +732,30 @@ model.onchange = () => {
       pickguardLayer.src = "";
     }
 
-    if(config.headstocks){
+if(config.headstocks){
 
-      headstockSection.style.display = "block";
-      headstockSelect.innerHTML = "";
+  headstockSection.style.display="block";
 
-      config.headstocks.forEach(h => {
-        let o = document.createElement("option");
-        o.value = h;
+  // 🔥 THIS LINE IS CRITICAL
+  headstockSelect.innerHTML="";
 
-        if(h === "r") o.text = "Standard";
-        else if(h === "l") o.text = "Reverse";
-        else if(h === "3x3") o.text = "3x3";
-        else if(h === "6") o.text = "6 in line";
+  config.headstocks.forEach(h=>{
 
-        headstockSelect.appendChild(o);
-      });
+    let o = document.createElement("option");
+    o.value = h;
 
-    } else {
-      headstockSection.style.display = "none";
-    }
+    o.text = h
+      .split("-")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+    headstockSelect.appendChild(o);
+
+  });
+
+}else{
+  headstockSection.style.display="none";
+}
 
     updateBase();
     updateInlays();
