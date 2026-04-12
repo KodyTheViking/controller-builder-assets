@@ -559,14 +559,10 @@ const pickguardContainer=document.getElementById("pickguardSwatches");
 const inlayStyleContainer=document.getElementById("inlayStyleSwatches");
 const inlayColorContainer=document.getElementById("inlayColorSwatches");
 
-headstockSelect.onchange = () => {
-
-  function updateHeadstock(){
-
-  const headstockLayer = document.getElementById("headstock");
+function updateHeadstock(){
 
   let color = document.querySelector("#headstockColorSwatches .active")?.dataset.color || "black";
-  let type = document.getElementById("headstockSelect").value || "bastard-sword";
+  let type = headstockSelect.value || "bastard-sword";
 
   let folder = "headstocks";
 
@@ -579,8 +575,8 @@ headstockSelect.onchange = () => {
   triggerFog();
 }
 
-  updateBase();   // refresh base image
-  triggerFog();   // 👈 also trigger fog
+headstockSelect.onchange = () => {
+  updateHeadstock();
 };
   
 /* BASE COLOR SWATCHES */
@@ -873,18 +869,20 @@ function initialFogPulse(){
 
 function updateBase(){
 
-const config=MODELS[model.value];
+  const config = MODELS[model.value];
 
-let color=document.querySelector("#baseSwatches .active")?.dataset.color || "black";
+  let color = document.querySelector("#baseSwatches .active")?.dataset.color || "black";
 
-let headstock=headstockSelect.value;
+  let file = `base-${color}`;
 
-let file="";
+  if(model.value==="paladin" && color==="cosmic"){
+    file = "base-cosmic";
+  }
 
+  baseLayer.src = ROOT + config.folder + "/base/" + file + ".png";
 
-
-file=`base-${color}`;
-
+  triggerFog();
+  updateSummary();
 }
 
 if(model.value==="paladin" && color==="cosmic"){file="base-cosmic";}
