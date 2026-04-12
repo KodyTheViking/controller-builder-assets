@@ -526,6 +526,12 @@ const pickguardLayer=document.getElementById("pickguard");
 const hardwareLayer=document.getElementById("hardware");
 const bgLayer=document.getElementById("bg");
 
+const headstockLayer = document.getElementById("headstock");
+
+if(headstockLayer){
+  headstockLayer.crossOrigin = "anonymous";
+}
+
 baseLayer.crossOrigin="anonymous";
 inlaysLayer.crossOrigin="anonymous";
 pickguardLayer.crossOrigin="anonymous";
@@ -540,11 +546,7 @@ fog.src = ROOT + "casket/fog.png";
 
 lid.src = ROOT + "casket/lid.png";
 
-const headstockLayer = document.getElementById("headstock");
 
-if(headstockLayer){
-  headstockLayer.crossOrigin = "anonymous";
-}
 
 /* start open */
 lid.classList.add("lid-open");
