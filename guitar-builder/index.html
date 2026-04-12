@@ -538,6 +538,9 @@ fog.src = ROOT + "casket/fog.png";
 
 lid.src = ROOT + "casket/lid.png";
 
+const headstockLayer = document.getElementById("headstock");
+headstockLayer.crossOrigin="anonymous";
+
 /* start open */
 lid.classList.add("lid-open");
 
@@ -550,6 +553,25 @@ const inlayStyleContainer=document.getElementById("inlayStyleSwatches");
 const inlayColorContainer=document.getElementById("inlayColorSwatches");
 
 headstockSelect.onchange = () => {
+
+  function updateHeadstock(){
+
+  const headstockLayer = document.getElementById("headstock");
+
+  let color = document.querySelector("#headstockColorSwatches .active")?.dataset.color || "black";
+  let type = document.getElementById("headstockSelect").value || "bastard-sword";
+
+  let folder = "headstocks";
+
+  if(model.value==="doubleneck"){
+    folder = "double-neck headstocks";
+  }
+
+  headstockLayer.src = ROOT + folder + "/" + type + "/" + color + ".png";
+
+  triggerFog();
+}
+
   updateBase();   // refresh base image
   triggerFog();   // 👈 also trigger fog
 };
@@ -852,23 +874,7 @@ let headstock=headstockSelect.value;
 
 let file="";
 
-if(model.value==="barbarian"||model.value==="bard"){
 
-if(!headstock) headstock="r";
-
-file=`base-${color}-${headstock}`;
-
-}
-
-else if(model.value==="necromancer"){
-
-if(!headstock) headstock="3x3";
-
-file=`base-${color}${headstock}`;
-
-}
-
-else{
 
 file=`base-${color}`;
 
