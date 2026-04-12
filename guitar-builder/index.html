@@ -786,6 +786,7 @@ headstockSelect.selectedIndex = 0;
 
     updateBase();
     updateInlays();
+    updateHeadstock();
 
   });
 
@@ -1010,12 +1011,11 @@ window.addEventListener("load", ()=>{
   initialFogPulse();
 });
   
-updateHeadstock();
+
 
 model.onchange();
 
-console.log("HEADSTOCK TYPE:", headstockSelect.value);
-console.log("HEADSTOCK PATH:", ROOT + "headstocks/" + headstockSelect.value + "/black.png");
+
 
 </script>
 
