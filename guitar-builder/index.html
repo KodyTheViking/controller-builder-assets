@@ -541,7 +541,10 @@ fog.src = ROOT + "casket/fog.png";
 lid.src = ROOT + "casket/lid.png";
 
 const headstockLayer = document.getElementById("headstock");
-headstockLayer.crossOrigin="anonymous";
+
+if(headstockLayer){
+  headstockLayer.crossOrigin = "anonymous";
+}
 
 /* start open */
 lid.classList.add("lid-open");
