@@ -753,6 +753,8 @@ if(config.headstocks){
 
   });
 
+headstockSelect.selectedIndex = 0;
+
 }else{
   headstockSection.style.display="none";
 }
@@ -997,7 +999,12 @@ window.addEventListener("load", ()=>{
   initialFogPulse();
 });
   
+updateHeadstock();
+
 model.onchange();
+
+console.log("HEADSTOCK TYPE:", headstockSelect.value);
+console.log("HEADSTOCK PATH:", ROOT + "headstocks/" + headstockSelect.value + "/black.png");
 
 </script>
 
