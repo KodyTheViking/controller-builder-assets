@@ -9,6 +9,10 @@
 
 <style>
 
+window.onerror = function(message, source, lineno){
+  console.log("ERROR AT LINE:", lineno, message);
+};
+
 @font-face{
 font-family: 'BlackCastle';
 src: url('https://kodytheviking.github.io/controller-builder-assets/guitar-builder/fonts/black-castle.ttf') format('truetype');
