@@ -618,29 +618,24 @@ COLORS.forEach(color=>{
 const headstockColorContainer = document.getElementById("headstockColorSwatches");
 
 COLORS.forEach(color=>{
-
   let sw=document.createElement("div");
 
   sw.className="swatch";
   sw.dataset.color=color;
 
-  // 👇 ONLY Katar supports cosmic
-  if(color==="cosmic"){
-    sw.style.display = "none";
-  }
-
   if(color==="cosmic"){sw.classList.add("rainbow");}
   else{sw.style.background=color;}
 
   sw.onclick=()=>{
-
     document.querySelectorAll("#headstockColorSwatches .swatch")
       .forEach(s=>s.classList.remove("active"));
 
     sw.classList.add("active");
 
+    updateHeadstock();
   };
 
+  headstockColorContainer.appendChild(sw);
 });
 
 /* INLAY STYLE SWATCHES */
