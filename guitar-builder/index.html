@@ -622,31 +622,44 @@ COLORS.forEach(color=>{
 
 const headstockColorContainer = document.getElementById("headstockColorSwatches");
 
-COLORS.forEach(color=>{
+if(headstockColorContainer){
 
-  let sw=document.createElement("div");
+  COLORS.forEach(color=>{
 
-  sw.className="swatch";
-  sw.dataset.color=color;
+    let sw=document.createElement("div");
 
-  // 👇 ONLY Katar supports cosmic
-  if(color==="cosmic"){
-    sw.style.display = "none";
+    sw.className="swatch";
+    sw.dataset.color=color;
+
+    // ONLY Katar supports cosmic
+    if(color==="cosmic"){
+      sw.style.display = "none";
+    }
+
+    if(color==="cosmic"){sw.classList.add("rainbow");}
+    else{sw.style.background=color;}
+
+    sw.onclick=()=>{
+
+      document.querySelectorAll("#headstockColorSwatches .swatch")
+        .forEach(s=>s.classList.remove("active"));
+
+      sw.classList.add("active");
+
+      updateHeadstock();
+    };
+
+    headstockColorContainer.appendChild(sw);
+
+  });
+
+  // ✅ set default active
+  const first = headstockColorContainer.querySelector(".swatch");
+  if(first){
+    first.classList.add("active");
   }
 
-  if(color==="cosmic"){sw.classList.add("rainbow");}
-  else{sw.style.background=color;}
-
-  sw.onclick=()=>{
-
-    document.querySelectorAll("#headstockColorSwatches .swatch")
-      .forEach(s=>s.classList.remove("active"));
-
-    sw.classList.add("active");
-
-  };
-
-});
+}
 
 /* INLAY STYLE SWATCHES */
 
