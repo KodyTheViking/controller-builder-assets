@@ -617,26 +617,32 @@ COLORS.forEach(color=>{
 
 const headstockColorContainer = document.getElementById("headstockColorSwatches");
 
-COLORS.forEach(color=>{
-  let sw=document.createElement("div");
+if(headstockColorContainer){
 
-  sw.className="swatch";
-  sw.dataset.color=color;
+  COLORS.forEach(color=>{
 
-  if(color==="cosmic"){sw.classList.add("rainbow");}
-  else{sw.style.background=color;}
+    let sw=document.createElement("div");
 
-  sw.onclick=()=>{
-    document.querySelectorAll("#headstockColorSwatches .swatch")
-      .forEach(s=>s.classList.remove("active"));
+    sw.className="swatch";
+    sw.dataset.color=color;
 
-    sw.classList.add("active");
+    if(color==="cosmic"){sw.classList.add("rainbow");}
+    else{sw.style.background=color;}
 
-    updateHeadstock();
-  };
+    sw.onclick=()=>{
+      document.querySelectorAll("#headstockColorSwatches .swatch")
+        .forEach(s=>s.classList.remove("active"));
 
-  headstockColorContainer.appendChild(sw);
-});
+      sw.classList.add("active");
+
+      updateHeadstock();
+    };
+
+    headstockColorContainer.appendChild(sw);
+
+  });
+
+}
 
 /* INLAY STYLE SWATCHES */
 
