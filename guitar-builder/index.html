@@ -572,8 +572,10 @@ function updateHeadstock(){
   let color = document.querySelector("#headstockColorSwatches .active")?.dataset.color || "black";
   let type = headstockSelect.value || "bastard-sword";
 
+  // ✅ DEFINE folder HERE
   let folder = "headstocks";
 
+  // special case
   if(model.value==="doubleneck"){
     folder = "double-neck headstocks";
   }
