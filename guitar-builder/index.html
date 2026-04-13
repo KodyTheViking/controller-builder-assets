@@ -9,10 +9,6 @@
 
 <style>
 
-window.onerror = function(message, source, lineno){
-  console.log("ERROR AT LINE:", lineno, message);
-};
-
 @font-face{
 font-family: 'BlackCastle';
 src: url('https://kodytheviking.github.io/controller-builder-assets/guitar-builder/fonts/black-castle.ttf') format('truetype');
@@ -572,10 +568,8 @@ function updateHeadstock(){
   let color = document.querySelector("#headstockColorSwatches .active")?.dataset.color || "black";
   let type = headstockSelect.value || "bastard-sword";
 
-  // ✅ DEFINE folder HERE
   let folder = "headstocks";
 
-  // special case
   if(model.value==="doubleneck"){
     folder = "double-neck headstocks";
   }
@@ -585,14 +579,13 @@ function updateHeadstock(){
   triggerFog();
 }
 
-console.log("HEADSTOCK PATH:",
-  ROOT + folder + "/" + type + "/" + color + ".png"
-);
-
 headstockSelect.onchange = () => {
   updateHeadstock();
 };
   
+/* BASE COLOR SWATCHES */
+
+/* BASE COLOR SWATCHES */
 
 COLORS.forEach(color=>{
 
@@ -623,32 +616,31 @@ COLORS.forEach(color=>{
 
 const headstockColorContainer = document.getElementById("headstockColorSwatches");
 
-if(headstockColorContainer){
+COLORS.forEach(color=>{
 
-  COLORS.forEach(color=>{
+  let sw=document.createElement("div");
 
-    let sw=document.createElement("div");
+  sw.className="swatch";
+  sw.dataset.color=color;
 
-    sw.className="swatch";
-    sw.dataset.color=color;
+  // 👇 ONLY Katar supports cosmic
+  if(color==="cosmic"){
+    sw.style.display = "none";
+  }
 
-    if(color==="cosmic"){sw.classList.add("rainbow");}
-    else{sw.style.background=color;}
+  if(color==="cosmic"){sw.classList.add("rainbow");}
+  else{sw.style.background=color;}
 
-    sw.onclick=()=>{
-      document.querySelectorAll("#headstockColorSwatches .swatch")
-        .forEach(s=>s.classList.remove("active"));
+  sw.onclick=()=>{
 
-      sw.classList.add("active");
+    document.querySelectorAll("#headstockColorSwatches .swatch")
+      .forEach(s=>s.classList.remove("active"));
 
-      updateHeadstock();
-    };
+    sw.classList.add("active");
 
-    headstockColorContainer.appendChild(sw);
+  };
 
-  });
-
-}
+});
 
 /* INLAY STYLE SWATCHES */
 
