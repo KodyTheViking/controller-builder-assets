@@ -575,6 +575,8 @@ function updateHeadstock(){
   triggerFog();
 }
 
+console.log("HEADSTOCK VALUE:", headstockSelect.value);
+
 headstockSelect.onchange = () => {
   updateHeadstock();
 };
@@ -779,6 +781,10 @@ if(config.headstocks){
   });
 
 headstockSelect.selectedIndex = 0;
+
+setTimeout(()=>{
+  updateHeadstock();
+}, 50);
 
 }else{
   headstockSection.style.display="none";
