@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -599,31 +598,14 @@ COLORS.forEach(color=>{
 
   sw.onclick=()=>{
 
-    // clear selection
     document.querySelectorAll("#baseSwatches .swatch")
       .forEach(s=>s.classList.remove("active"));
 
-    // set active
     sw.classList.add("active");
 
-    // 🔥 FORCE update
     updateBase();
 
   };
-
-  baseContainer.appendChild(sw);
-
-});
-
-
-// ✅ ensure ONE default is active AFTER render
-setTimeout(()=>{
-  const firstBase = document.querySelector("#baseSwatches .swatch");
-  if(firstBase){
-    firstBase.classList.add("active");
-    updateBase(); // 🔥 ensures base actually loads correctly
-  }
-},0);
 
   baseContainer.appendChild(sw);
 
