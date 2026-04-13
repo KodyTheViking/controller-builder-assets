@@ -594,20 +594,25 @@ COLORS.forEach(color=>{
   sw.className="swatch";
   sw.dataset.color=color;
 
+  // ONLY Katar supports cosmic
+  if(color==="cosmic"){
+    sw.style.display = "none";
+  }
+
   if(color==="cosmic"){sw.classList.add("rainbow");}
   else{sw.style.background=color;}
 
   sw.onclick=()=>{
 
-    document.querySelectorAll("#baseSwatches .swatch")
+    document.querySelectorAll("#headstockColorSwatches .swatch")
       .forEach(s=>s.classList.remove("active"));
 
     sw.classList.add("active");
 
-    updateBase();
+    updateHeadstock();   // 👈 also needed (see below)
   };
 
-  baseContainer.appendChild(sw);
+  headstockColorContainer.appendChild(sw);  // 🔥 THIS WAS MISSING
 
 });
 
@@ -831,7 +836,6 @@ setTimeout(()=>{
 
     updateBase();
     updateInlays();
-    updateHeadstock();
 
   });
 
