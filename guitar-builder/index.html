@@ -551,7 +551,6 @@ fog.src = ROOT + "casket/fog.png";
 
 lid.src = ROOT + "casket/lid.png";
 
-model.value = "barbarian";
 
 /* start open */
 lid.classList.add("lid-open");
@@ -580,12 +579,12 @@ function updateHeadstock(){
   triggerFog();
 }
 
-console.log("HEADSTOCK VALUE:", headstockSelect.value);
-
 headstockSelect.onchange = () => {
   updateHeadstock();
 };
   
+/* BASE COLOR SWATCHES */
+
 /* BASE COLOR SWATCHES */
 
 COLORS.forEach(color=>{
@@ -612,6 +611,7 @@ COLORS.forEach(color=>{
 
 });
 
+
 /* HEADSTOCK COLOR SWATCHES */
 
 const headstockColorContainer = document.getElementById("headstockColorSwatches");
@@ -623,31 +623,10 @@ COLORS.forEach(color=>{
   sw.className="swatch";
   sw.dataset.color=color;
 
-  if(color==="cosmic"){sw.classList.add("rainbow");}
-  else{sw.style.background=color;}
-
-  sw.onclick=()=>{
-
-    document.querySelectorAll("#headstockColorSwatches .swatch")
-      .forEach(s=>s.classList.remove("active"));
-
-    sw.classList.add("active");
-
-    updateHeadstock();
-  };
-
-  headstockColorContainer.appendChild(sw);
-
-});
-
-const headstockColorContainer = document.getElementById("headstockColorSwatches");
-
-COLORS.forEach(color=>{
-
-  let sw=document.createElement("div");
-
-  sw.className="swatch";
-  sw.dataset.color=color;
+  // 👇 ONLY Katar supports cosmic
+  if(color==="cosmic"){
+    sw.style.display = "none";
+  }
 
   if(color==="cosmic"){sw.classList.add("rainbow");}
   else{sw.style.background=color;}
@@ -659,15 +638,9 @@ COLORS.forEach(color=>{
 
     sw.classList.add("active");
 
-    updateHeadstock();
-
   };
 
   headstockColorContainer.appendChild(sw);
-
-});
-
-baseContainer.appendChild(sw);
 
 });
 
@@ -1075,7 +1048,7 @@ window.addEventListener("load", ()=>{
   initialFogPulse();
 });
   
-
+model.value = "barbarian";
 
 model.onchange();
 
