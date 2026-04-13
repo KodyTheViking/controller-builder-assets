@@ -586,7 +586,35 @@ headstockSelect.onchange = () => {
   
 /* BASE COLOR SWATCHES */
 
-/* BASE COLOR SWATCHES */
+COLORS.forEach(color=>{
+
+  let sw=document.createElement("div");
+
+  sw.className="swatch";
+  sw.dataset.color=color;
+
+  if(color==="cosmic"){sw.classList.add("rainbow");}
+  else{sw.style.background=color;}
+
+  sw.onclick=()=>{
+
+    document.querySelectorAll("#baseSwatches .swatch")
+      .forEach(s=>s.classList.remove("active"));
+
+    sw.classList.add("active");
+
+    updateBase();
+
+  };
+
+  baseContainer.appendChild(sw);
+
+});
+
+
+/* HEADSTOCK COLOR SWATCHES */
+
+const headstockColorContainer = document.getElementById("headstockColorSwatches");
 
 COLORS.forEach(color=>{
 
@@ -595,7 +623,7 @@ COLORS.forEach(color=>{
   sw.className="swatch";
   sw.dataset.color=color;
 
-  // ONLY Katar supports cosmic
+  // Only Katar supports cosmic
   if(color==="cosmic"){
     sw.style.display = "none";
   }
@@ -610,54 +638,21 @@ COLORS.forEach(color=>{
 
     sw.classList.add("active");
 
-    updateHeadstock();   // 👈 also needed (see below)
+    updateHeadstock();
+
   };
+
+  headstockColorContainer.appendChild(sw);
 
 });
 
 
-/* HEADSTOCK COLOR SWATCHES */
+// ✅ Set default active swatches
+const firstBase = document.querySelector("#baseSwatches .swatch");
+if(firstBase){ firstBase.classList.add("active"); }
 
-const headstockColorContainer = document.getElementById("headstockColorSwatches");
-
-if(headstockColorContainer){
-
-  COLORS.forEach(color=>{
-
-    let sw=document.createElement("div");
-
-    sw.className="swatch";
-    sw.dataset.color=color;
-
-    // ONLY Katar supports cosmic
-    if(color==="cosmic"){
-      sw.style.display = "none";
-    }
-
-    if(color==="cosmic"){sw.classList.add("rainbow");}
-    else{sw.style.background=color;}
-
-    sw.onclick=()=>{
-
-      document.querySelectorAll("#headstockColorSwatches .swatch")
-        .forEach(s=>s.classList.remove("active"));
-
-      sw.classList.add("active");
-
-      updateHeadstock();
-    };
-
-    headstockColorContainer.appendChild(sw);
-
-  });
-
-  // ✅ set default active
-  const first = headstockColorContainer.querySelector(".swatch");
-  if(first){
-    first.classList.add("active");
-  }
-
-}
+const firstHeadstock = document.querySelector("#headstockColorSwatches .swatch");
+if(firstHeadstock){ firstHeadstock.classList.add("active"); }
 
 /* INLAY STYLE SWATCHES */
 
