@@ -891,6 +891,7 @@ setTimeout(()=>{
 
     updateBase();
     updateInlays();
+    buildPickguardSwatches();
 
   });
 
@@ -1041,6 +1042,99 @@ function updatePickguard(){
 
   triggerFog();
   updateSummary();
+
+}
+
+function buildPickguardSwatches(){
+
+  const config = MODELS[model.value];
+
+  // 🔥 CLEAR OLD SWATCHES
+  pickguardContainer.innerHTML = "";
+
+  PICKGUARD_COLORS.forEach(color=>{
+
+    // ARTIFICER = 2 swatches per color
+    if(model.value === "artificer"){
+
+      ["block","pinstripe"].forEach(type=>{
+
+        let sw = document.createElement("div");
+
+        sw.className = "swatch";
+        sw.dataset.color = color;
+        sw.dataset.type = type;
+
+        if(color==="none"){
+          sw.style.background="#222";
+          sw.style.border="2px dashed #777";
+        }else{
+
+          if(type === "block"){
+            sw.style.background = color;
+          }
+
+          if(type === "pinstripe"){
+            sw.style.background = "transparent";
+            sw.style.border = `3px solid ${color}`;
+          }
+
+        }
+
+        sw.onclick = ()=>{
+
+          document.querySelectorAll("#pickguardSwatches .swatch")
+            .forEach(s=>s.classList.remove("active"));
+
+          sw.classList.add("active");
+
+          updatePickguard();
+
+        };
+
+        pickguardContainer.appendChild(sw);
+
+      });
+
+    }
+
+    // NORMAL MODELS
+    else{
+
+      let sw = document.createElement("div");
+
+      sw.className = "swatch";
+      sw.dataset.color = color;
+
+      if(color==="none"){
+        sw.style.background="#222";
+        sw.style.border="2px dashed #777";
+      }else{
+        sw.style.background=color;
+      }
+
+      sw.onclick=()=>{
+
+        document.querySelectorAll("#pickguardSwatches .swatch")
+          .forEach(s=>s.classList.remove("active"));
+
+        sw.classList.add("active");
+
+        updatePickguard();
+
+      };
+
+      pickguardContainer.appendChild(sw);
+
+    }
+
+  });
+
+  // ✅ SET DEFAULT
+  const first = pickguardContainer.querySelector(".swatch");
+  if(first){
+    first.classList.add("active");
+  }
 
 }
 
