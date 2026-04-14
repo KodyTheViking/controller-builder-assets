@@ -1051,57 +1051,98 @@ function buildPickguardSwatches(){
 
   const config = MODELS[model.value];
 
-  // 🔥 CLEAR OLD SWATCHES
   pickguardContainer.innerHTML = "";
 
-  PICKGUARD_COLORS.forEach(color=>{
+  // 🔥 ARTIFICER (grouped layout)
+  if(model.value === "artificer"){
 
-    // ARTIFICER = 2 swatches per color
-    if(model.value === "artificer"){
+    // ===== BLOCK SECTION =====
+    let blockTitle = document.createElement("div");
+    blockTitle.innerText = "Block";
+    blockTitle.style.marginTop = "10px";
+    blockTitle.style.fontWeight = "bold";
+    pickguardContainer.appendChild(blockTitle);
 
-      ["block","pinstripe"].forEach(type=>{
+    let blockRow = document.createElement("div");
+    blockRow.className = "swatches";
+    pickguardContainer.appendChild(blockRow);
 
-        let sw = document.createElement("div");
+    PICKGUARD_COLORS.forEach(color=>{
 
-        sw.className = "swatch";
-        sw.dataset.color = color;
-        sw.dataset.type = type;
+      let sw = document.createElement("div");
 
-        if(color==="none"){
-          sw.style.background="#222";
-          sw.style.border="2px dashed #777";
-        }else{
+      sw.className = "swatch";
+      sw.dataset.color = color;
+      sw.dataset.type = "block";
 
-          if(type === "block"){
-            sw.style.background = color;
-          }
+      if(color==="none"){
+        sw.style.background="#222";
+        sw.style.border="2px dashed #777";
+      }else{
+        sw.style.background = color;
+      }
 
-          if(type === "pinstripe"){
-            sw.style.background = "transparent";
-            sw.style.border = `3px solid ${color}`;
-          }
+      sw.onclick = ()=>{
+        document.querySelectorAll("#pickguardSwatches .swatch")
+          .forEach(s=>s.classList.remove("active"));
 
-        }
+        sw.classList.add("active");
 
-        sw.onclick = ()=>{
+        updatePickguard();
+        updateSummary();
+      };
 
-          document.querySelectorAll("#pickguardSwatches .swatch")
-            .forEach(s=>s.classList.remove("active"));
+      blockRow.appendChild(sw);
 
-          sw.classList.add("active");
+    });
 
-          updatePickguard();
+    // ===== PINSTRIPE SECTION =====
+    let stripeTitle = document.createElement("div");
+    stripeTitle.innerText = "Pinstripe";
+    stripeTitle.style.marginTop = "10px";
+    stripeTitle.style.fontWeight = "bold";
+    pickguardContainer.appendChild(stripeTitle);
 
-        };
+    let stripeRow = document.createElement("div");
+    stripeRow.className = "swatches";
+    pickguardContainer.appendChild(stripeRow);
 
-        pickguardContainer.appendChild(sw);
+    PICKGUARD_COLORS.forEach(color=>{
 
-      });
+      let sw = document.createElement("div");
 
-    }
+      sw.className = "swatch";
+      sw.dataset.color = color;
+      sw.dataset.type = "pinstripe";
 
-    // NORMAL MODELS
-    else{
+      if(color==="none"){
+        sw.style.background="#222";
+        sw.style.border="2px dashed #777";
+      }else{
+        sw.style.background = "transparent";
+        sw.style.border = `3px solid ${color}`;
+      }
+
+      sw.onclick = ()=>{
+        document.querySelectorAll("#pickguardSwatches .swatch")
+          .forEach(s=>s.classList.remove("active"));
+
+        sw.classList.add("active");
+
+        updatePickguard();
+        updateSummary();
+      };
+
+      stripeRow.appendChild(sw);
+
+    });
+
+  }
+
+  // 🔥 NORMAL MODELS (unchanged)
+  else{
+
+    PICKGUARD_COLORS.forEach(color=>{
 
       let sw = document.createElement("div");
 
@@ -1123,16 +1164,17 @@ function buildPickguardSwatches(){
         sw.classList.add("active");
 
         updatePickguard();
+        updateSummary();
 
       };
 
       pickguardContainer.appendChild(sw);
 
-    }
+    });
 
-  });
+  }
 
-  // ✅ SET DEFAULT
+  // ✅ Default selection
   const first = pickguardContainer.querySelector(".swatch");
   if(first){
     first.classList.add("active");
