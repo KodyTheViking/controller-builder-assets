@@ -1020,13 +1020,23 @@ function updatePickguard(){
 
   let active = document.querySelector("#pickguardSwatches .active");
 
+  // ✅ SAFE defaults
   let color = active?.dataset.color || "black";
-  let type = active?.dataset.type || "default";
+  let type = active?.dataset.type || "block";
+
+  // 🔥 DEBUG (leave this in for now)
+  console.log("TYPE:", type);
+  console.log("COLOR:", color);
+  console.log("PATH:",
+    ROOT + config.folder + "/pickguards/" + type + "/" + color + ".png"
+  );
 
   if(model.value === "artificer"){
-    pickguardLayer.src = ROOT + config.folder + "/pickguards/" + type + "/" + color + ".png";
+    pickguardLayer.src =
+      ROOT + config.folder + "/pickguards/" + type + "/" + color + ".png";
   }else{
-    pickguardLayer.src = ROOT + config.folder + "/pickguards/" + color + ".png";
+    pickguardLayer.src =
+      ROOT + config.folder + "/pickguards/" + color + ".png";
   }
 
   triggerFog();
