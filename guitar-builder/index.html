@@ -1147,7 +1147,19 @@ const config = MODELS[model.value];
 let baseColor = document.querySelector("#baseSwatches .active")?.dataset.color || "";
 let style = document.querySelector("#inlayStyleSwatches .active")?.dataset.style || "";
 let color = document.querySelector("#inlayColorSwatches .active")?.dataset.color || "";
-let pickguard = document.querySelector("#pickguardSwatches .active")?.dataset.color || "none";
+let activePickguard = document.querySelector("#pickguardSwatches .active");
+
+let pickguardColor = activePickguard?.dataset.color || "none";
+let pickguardType = activePickguard?.dataset.type || "";
+
+function formatLabel(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+let pickguard =
+  model.value === "artificer"
+    ? `${formatLabel(pickguardColor)} (${formatLabel(pickguardType)})`
+    : formatLabel(pickguardColor);
 let headstock = headstockSelect.value || "";
 
 let modelName = MODEL_NAMES[model.value] || model.value;
