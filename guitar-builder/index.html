@@ -965,19 +965,23 @@ updateSummary();
 
 }
 
-/* PICKGUARD */
-
 function updatePickguard(){
 
-const config=MODELS[model.value];
+  const config = MODELS[model.value];
 
-let color=document.querySelector("#pickguardSwatches .active")?.dataset.color || "black";
+  let active = document.querySelector("#pickguardSwatches .active");
 
-pickguardLayer.src=ROOT+config.folder+"/pickguards/"+color+".png";
+  let color = active?.dataset.color || "black";
+  let type = active?.dataset.type || "default";
 
-triggerFog();
+  if(model.value === "artificer"){
+    pickguardLayer.src = ROOT + config.folder + "/pickguards/" + type + "/" + color + ".png";
+  }else{
+    pickguardLayer.src = ROOT + config.folder + "/pickguards/" + color + ".png";
+  }
 
-updateSummary();
+  triggerFog();
+  updateSummary();
 
 }
 
