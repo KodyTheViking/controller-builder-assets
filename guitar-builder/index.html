@@ -715,37 +715,86 @@ inlayColorContainer.appendChild(sw);
 
 });
 
-/* PICKGUARDS */
+/* PICKGUARD SWATCHES */
 
-PICKGUARD_COLORS.forEach(pg=>{
+PICKGUARD_COLORS.forEach(color=>{
 
-let sw=document.createElement("div");
+  const config = MODELS[model.value];
 
-sw.className="swatch";
+  // 🔥 ARTIFICER: create TWO swatches per color
+  if(model.value === "artificer"){
 
-if(pg==="none"){
+    ["block","pinstripe"].forEach(type=>{
 
-sw.style.background="#222";
-sw.style.border="2px dashed #777";
+      let sw = document.createElement("div");
 
-}else{
+      sw.className = "swatch";
+      sw.dataset.color = color;
+      sw.dataset.type = type;
 
-sw.style.background=pg;
+      // VISUAL STYLE
+      if(color==="none"){
+        sw.style.background="#222";
+        sw.style.border="2px dashed #777";
+      }else{
 
-}
-sw.dataset.color=pg;
+        if(type === "block"){
+          sw.style.background = color;
+        }
 
-sw.onclick=()=>{
+        if(type === "pinstripe"){
+          sw.style.background = "transparent";
+          sw.style.border = `3px solid ${color}`;
+        }
 
-document.querySelectorAll("#pickguardSwatches .swatch").forEach(s=>s.classList.remove("active"));
+      }
 
-sw.classList.add("active");
+      sw.onclick = ()=>{
 
-updatePickguard();
+        document.querySelectorAll("#pickguardSwatches .swatch")
+          .forEach(s=>s.classList.remove("active"));
 
-};
+        sw.classList.add("active");
 
-pickguardContainer.appendChild(sw);
+        updatePickguard();
+
+      };
+
+      pickguardContainer.appendChild(sw);
+
+    });
+
+  }
+
+  // 🔥 NORMAL MODELS (unchanged)
+  else{
+
+    let sw=document.createElement("div");
+
+    sw.className="swatch";
+    sw.dataset.color=color;
+
+    if(color==="none"){
+      sw.style.background="#222";
+      sw.style.border="2px dashed #777";
+    }else{
+      sw.style.background=color;
+    }
+
+    sw.onclick=()=>{
+
+      document.querySelectorAll("#pickguardSwatches .swatch")
+        .forEach(s=>s.classList.remove("active"));
+
+      sw.classList.add("active");
+
+      updatePickguard();
+
+    };
+
+    pickguardContainer.appendChild(sw);
+
+  }
 
 });
 
