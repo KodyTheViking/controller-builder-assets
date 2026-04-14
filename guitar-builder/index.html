@@ -749,16 +749,17 @@ PICKGUARD_COLORS.forEach(color=>{
 
       }
 
-      sw.onclick = ()=>{
+sw.onclick = ()=>{
 
-        document.querySelectorAll("#pickguardSwatches .swatch")
-          .forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll("#pickguardSwatches .swatch")
+    .forEach(s=>s.classList.remove("active"));
 
-        sw.classList.add("active");
+  sw.classList.add("active");
 
-        updatePickguard();
+  updatePickguard();
+  updateSummary();   // 🔥 THIS WAS MISSING
 
-      };
+};
 
       pickguardContainer.appendChild(sw);
 
