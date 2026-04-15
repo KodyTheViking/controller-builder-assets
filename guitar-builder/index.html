@@ -84,6 +84,15 @@ pointer-events:none;
 transform:translateX(3px);
 }
   
+#base,
+#headstock,
+#inlays,
+#pickguard,
+#hardware{
+  transition: opacity 0.25s ease;
+  opacity: 1;
+}
+
 /* LAYER ORDER */
 
 #bg{z-index:1;}
@@ -810,6 +819,22 @@ sw.onclick = ()=>{
 
 });
 
+function fadeSwap(imgElement, newSrc){
+
+  if(!imgElement) return;
+
+  imgElement.style.opacity = 0;
+
+  setTimeout(()=>{
+    imgElement.src = newSrc;
+
+    imgElement.onload = ()=>{
+      imgElement.style.opacity = 1;
+    };
+
+  }, 120); // fade-out timing
+
+}
 
 function playCasketAnimation(updateCallback){
 
@@ -995,7 +1020,7 @@ function updateBase(){
     file = "base-cosmic";
   }
 
-  baseLayer.src = ROOT + config.folder + "/base/" + file + ".png";
+  fadeSwap(baseLayer, ROOT + config.folder + "/base/" + file + ".png");
 
   triggerFog();
   updateSummary();
