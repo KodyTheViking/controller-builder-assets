@@ -595,7 +595,7 @@ function updateHeadstock(){
     folder = "double-neck headstocks";
   }
 
-  headstockLayer.src = ROOT + folder + "/" + type + "/" + color + ".png";
+  fadeSwap(headstockLayer.src = ROOT + folder + "/" + type + "/" + color + ".png");
 
   triggerFog();
 }
