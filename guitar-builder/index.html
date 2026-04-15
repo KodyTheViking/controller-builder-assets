@@ -436,6 +436,9 @@ width:100%;
     <input id="customerName" placeholder="Your Name" style="width:100%;padding:8px;margin-top:5px;">
     <input id="customerEmail" placeholder="Your Email" style="width:100%;padding:8px;margin-top:5px;">
 
+    <textarea id="customerNotes" placeholder="Additional notes (optional)" 
+style="width:100%;padding:8px;margin-top:10px;height:80px;"></textarea>
+
     <button onclick="sendBuild()">Send Build</button>
 
   </div>
@@ -887,9 +890,6 @@ if(config.headstocks){
 
 headstockSelect.selectedIndex = 0;
 
-if(!headstockSelect.value){
-  headstockSelect.value = config.headstocks[0];
-}
 
 setTimeout(()=>{
   updateHeadstock();
@@ -1250,10 +1250,13 @@ alert("Email service unavailable.");
 return;
 }
 
+const notes = document.getElementById("customerNotes").value;
+
 const params={
-customer_name:name,
-customer_email:email,
-build_summary:summary
+  customer_name:name,
+  customer_email:email,
+  build_summary:summary,
+  customer_notes:notes || "None"
 };
 
 emailjs.send(
