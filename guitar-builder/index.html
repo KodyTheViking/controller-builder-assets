@@ -649,7 +649,6 @@ COLORS.forEach(color=>{
   sw.className="swatch";
   sw.dataset.color=color;
 
-  // Only Katar supports cosmic
   if(color==="cosmic"){
     sw.style.display = "none";
   }
@@ -672,8 +671,6 @@ COLORS.forEach(color=>{
 
 });
 
-
-// ✅ Set default active swatches
 const firstBase = document.querySelector("#baseSwatches .swatch");
 if(firstBase){ firstBase.classList.add("active"); }
 
@@ -747,7 +744,6 @@ PICKGUARD_COLORS.forEach(color=>{
 
   const config = MODELS[model.value];
 
-  // 🔥 ARTIFICER: create TWO swatches per color
   if(model.value === "artificer"){
 
     ["block","pinstripe"].forEach(type=>{
@@ -758,7 +754,6 @@ PICKGUARD_COLORS.forEach(color=>{
       sw.dataset.color = color;
       sw.dataset.type = type;
 
-      // VISUAL STYLE
       if(color==="none"){
         sw.style.background="#222";
         sw.style.border="2px dashed #777";
@@ -783,7 +778,7 @@ sw.onclick = ()=>{
   sw.classList.add("active");
 
   updatePickguard();
-  updateSummary();   // 🔥 THIS WAS MISSING
+  updateSummary();
 
 };
 
@@ -793,7 +788,6 @@ sw.onclick = ()=>{
 
   }
 
-  // 🔥 NORMAL MODELS (unchanged)
   else{
 
     let sw=document.createElement("div");
@@ -838,7 +832,7 @@ function fadeSwap(imgElement, newSrc){
       imgElement.style.opacity = 1;
     };
 
-  }, 120); // fade-out timing
+  }, 120);
 
 }
 
@@ -849,7 +843,7 @@ function playCasketAnimation(updateCallback){
     sound.play().catch(()=>{});
   }
 
-  // CLOSE
+  
   lid.classList.remove("lid-open");
   lid.classList.add("lid-closed");
 
@@ -857,7 +851,7 @@ function playCasketAnimation(updateCallback){
 
     if(updateCallback) updateCallback();
 
-    // OPEN
+    
     setTimeout(()=>{
       lid.classList.remove("lid-closed");
       lid.classList.add("lid-open");
@@ -902,7 +896,6 @@ if(config.headstocks){
 
   headstockSection.style.display="block";
 
-  // 🔥 THIS LINE IS CRITICAL
   headstockSelect.innerHTML="";
 
   config.headstocks.forEach(h=>{
@@ -944,26 +937,23 @@ function triggerFog(){
 
   if(!fog) return;
 
-  // reset instantly
   fog.style.transition = "none";
   fog.style.opacity = "0";
   fog.style.transform = "scale(0.9)";
 
-  fog.offsetHeight; // force reflow
+  fog.offsetHeight;
 
-  // PHASE 1 — swell in
   fog.style.transition = "opacity 0.35s ease, transform 0.5s ease";
   fog.style.opacity = "0.9";
   fog.style.transform = "scale(1.1)";
 
-  // PHASE 2 — linger at peak
   setTimeout(()=>{
 
     fog.style.transition = "opacity 0.5s ease, transform 0.6s ease";
     fog.style.opacity = "0";
     fog.style.transform = "scale(1.15)";
 
-  },450); // 👈 linger time
+  },450);
 
 }
 
@@ -971,14 +961,12 @@ function initialFogPulse(){
 
   if(!fog) return;
 
-  // FORCE starting state
   fog.style.transition = "none";
   fog.style.opacity = "0";
   fog.style.transform = "scale(0.9)";
 
   fog.offsetHeight;
 
-  // slight delay so page is visible first
   setTimeout(()=>{
 
     let pulses = 0;
@@ -1000,7 +988,6 @@ function initialFogPulse(){
       if(pulses >= 4){
         clearInterval(pulseInterval);
 
-        // fade out completely
         setTimeout(()=>{
           fog.style.opacity = "0";
         },600);
@@ -1008,11 +995,9 @@ function initialFogPulse(){
 
     },1000);
 
-  },300); // 👈 delay so it actually shows
+  },300);
 
 }
-  
-/* BASE IMAGE */
 
 function updateBase(){
 
@@ -1031,8 +1016,6 @@ function updateBase(){
   triggerFog();
   updateSummary();
 }
-
-/* INLAYS */
 
 function updateInlays(){
 
@@ -1062,11 +1045,9 @@ function updatePickguard(){
 
   let active = document.querySelector("#pickguardSwatches .active");
 
-  // ✅ SAFE defaults
   let color = active?.dataset.color || "black";
   let type = active?.dataset.type || "block";
 
-  // 🔥 DEBUG (leave this in for now)
   console.log("TYPE:", type);
   console.log("COLOR:", color);
   console.log("PATH:",
@@ -1092,10 +1073,8 @@ function buildPickguardSwatches(){
 
   pickguardContainer.innerHTML = "";
 
-  // 🔥 ARTIFICER (grouped layout)
   if(model.value === "artificer"){
 
-    // ===== BLOCK SECTION =====
     let blockTitle = document.createElement("h3");
     blockTitle.innerText = "Block";
     blockTitle.style.marginTop = "10px";
@@ -1135,7 +1114,6 @@ function buildPickguardSwatches(){
 
     });
 
-    // ===== PINSTRIPE SECTION =====
     let stripeTitle = document.createElement("h3");
     stripeTitle.innerText = "Pinstripe";
     stripeTitle.style.marginTop = "10px";
@@ -1178,7 +1156,6 @@ function buildPickguardSwatches(){
 
   }
 
-  // 🔥 NORMAL MODELS (unchanged)
   else{
 
     PICKGUARD_COLORS.forEach(color=>{
@@ -1213,15 +1190,12 @@ function buildPickguardSwatches(){
 
   }
 
-  // ✅ Default selection
   const first = pickguardContainer.querySelector(".swatch");
   if(first){
     first.classList.add("active");
   }
 
 }
-
-/* SUMMARY */
 
 function updateSummary(){
 
@@ -1257,13 +1231,9 @@ Price: $${config.price}`;
 
 }
 
-/* RESET */
-
 function resetBuilder(){
 location.reload();
 }
-
-/* INIT */
 
 function sendBuild(){
 
