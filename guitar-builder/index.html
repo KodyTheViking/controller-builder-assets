@@ -601,16 +601,14 @@ function updateHeadstock(){
     folder = "double-neck headstocks";
   }
 
-  fadeSwap(headstockLayer.src = ROOT + folder + "/" + type + "/" + color + ".png");
+  fadeSwap(
+    headstockLayer,
+    ROOT + folder + "/" + type + "/" + color + ".png"
+  );
 
   triggerFog();
 }
-
-headstockSelect.onchange = () => {
-  updateHeadstock();
-};
   
-/* BASE COLOR SWATCHES */
 
 COLORS.forEach(color=>{
 
@@ -636,9 +634,6 @@ COLORS.forEach(color=>{
   baseContainer.appendChild(sw);
 
 });
-
-
-/* HEADSTOCK COLOR SWATCHES */
 
 const headstockColorContainer = document.getElementById("headstockColorSwatches");
 
@@ -677,7 +672,6 @@ if(firstBase){ firstBase.classList.add("active"); }
 const firstHeadstock = document.querySelector("#headstockColorSwatches .swatch");
 if(firstHeadstock){ firstHeadstock.classList.add("active"); }
 
-/* INLAY STYLE SWATCHES */
 
 INLAYS.forEach(style=>{
 
@@ -702,8 +696,6 @@ updateInlays();
 inlayStyleContainer.appendChild(sw);
 
 });
-
-/* INLAY COLOR SWATCHES */
 
 INLAY_COLORS.forEach(color=>{
 
@@ -737,8 +729,6 @@ updateInlays();
 inlayColorContainer.appendChild(sw);
 
 });
-
-/* PICKGUARD SWATCHES */
 
 PICKGUARD_COLORS.forEach(color=>{
 
@@ -859,8 +849,6 @@ function playCasketAnimation(updateCallback){
 
   },600);
 }
-  
-/* MODEL CHANGE */
 
 model.onchange = () => {
 
