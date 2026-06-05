@@ -316,7 +316,7 @@ width:100%;
 
   z-index:6;
 
-  opacity:0;   /* 👈 MUST start hidden */
+  opacity:0;
   pointer-events:none;
 
   transform:scale(0.95);
@@ -820,13 +820,14 @@ function fadeSwap(imgElement, newSrc){
   imgElement.style.opacity = 0;
 
   setTimeout(()=>{
-    imgElement.src = newSrc;
 
-    imgElement.onload = ()=>{
+    imgElement.onload = () => {
       imgElement.style.opacity = 1;
     };
 
-  }, 120);
+    imgElement.src = newSrc;
+
+  },120);
 
 }
 
