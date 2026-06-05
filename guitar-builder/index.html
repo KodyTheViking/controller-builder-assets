@@ -590,6 +590,10 @@ const pickguardContainer=document.getElementById("pickguardSwatches");
 const inlayStyleContainer=document.getElementById("inlayStyleSwatches");
 const inlayColorContainer=document.getElementById("inlayColorSwatches");
 
+headstockSelect.addEventListener("change", () => {
+  updateHeadstock();
+});
+
 function updateHeadstock(){
 
   let color =
