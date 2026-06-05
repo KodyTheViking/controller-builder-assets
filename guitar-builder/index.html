@@ -1057,12 +1057,6 @@ function updatePickguard(){
   let color = active?.dataset.color || "black";
   let type = active?.dataset.type || "block";
 
-  console.log("TYPE:", type);
-  console.log("COLOR:", color);
-  console.log("PATH:",
-    ROOT + config.folder + "/pickguards/" + type + "/" + color + ".png"
-  );
-
   if(model.value === "artificer"){
     pickguardLayer.src =
       ROOT + config.folder + "/pickguards/" + type + "/" + color + ".png";
@@ -1260,25 +1254,20 @@ let headstock = headstockSelect.value || "";
 
 let modelName = MODEL_NAMES[model.value] || model.value;
 
+let bezels =
+  document.getElementById("bezelsToggle").checked
+    ? "Yes"
+    : "No";
+
 document.getElementById("summary").value =
 `Model: ${modelName}
 Headstock: ${headstock}
 Base: ${baseColor}
 Inlays: ${style} (${color})
 Pickguard: ${pickguard}
+Fret Button Bezels: ${bezels}
 Price: $${config.price}`;
 
-}
-
-let bezels =
-  document.getElementById("bezelsToggle").checked
-    ? "Yes"
-    : "No";
-
-    Bezels: ${bezels}
-
-function resetBuilder(){
-location.reload();
 }
 
 function sendBuild(){
