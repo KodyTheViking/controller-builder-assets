@@ -101,8 +101,9 @@ transform:translateX(3px);
 #inlays{z-index:4;}
 #pickguard{z-index:5;}
 #hardware{z-index:6;}
-#casketFog{z-index:7;}
-#casketLid{z-index:8;}
+#bezels{z-index:7;}
+#casketFog{z-index:8;}
+#casketLid{z-index:9;}
 
 /* CONTROLS */
 
@@ -355,6 +356,7 @@ width:100%;
   <img id="inlays">
   <img id="pickguard">
   <img id="hardware">
+  <img id="bezels">
   <img id="casketFog">
   <img id="casketLid">
 
@@ -430,6 +432,13 @@ width:100%;
 
     <h3>Accent Detail</h3>
     <div id="pickguardSwatches" class="swatches"></div>
+
+    <h3>Options</h3>
+
+<label style="display:flex;align-items:center;gap:8px;">
+  <input type="checkbox" id="bezelsToggle">
+  Fret Button Bezels
+</label>
 
     <div class="price">
       Total Price: <span id="price">$200</span>
@@ -556,6 +565,7 @@ const baseLayer=document.getElementById("base");
 const inlaysLayer=document.getElementById("inlays");
 const pickguardLayer=document.getElementById("pickguard");
 const hardwareLayer=document.getElementById("hardware");
+const bezelsLayer=document.getElementById("bezels");
 const bgLayer=document.getElementById("bg");
 
 const headstockLayer = document.getElementById("headstock");
@@ -568,6 +578,7 @@ baseLayer.crossOrigin="anonymous";
 inlaysLayer.crossOrigin="anonymous";
 pickguardLayer.crossOrigin="anonymous";
 hardwareLayer.crossOrigin="anonymous";
+bezelsLayer.crossOrigin="anonymous";
 bgLayer.crossOrigin="anonymous";
 
 bgLayer.src = ROOT+"background.png";
@@ -923,6 +934,7 @@ setTimeout(()=>{
     updateBase();
     updateInlays();
     buildPickguardSwatches();
+    updateBezels();
 
   });
 
@@ -1194,6 +1206,36 @@ function buildPickguardSwatches(){
 
 }
 
+function updateBezels(){
+
+  const enabled =
+    document.getElementById("bezelsToggle").checked;
+
+  if(!enabled){
+
+    bezelsLayer.src = "";
+    updateSummary();
+    return;
+
+  }
+
+  if(model.value === "doubleneck"){
+
+    bezelsLayer.src =
+      ROOT + "bezels/double-neck.png";
+
+  }else{
+
+    bezelsLayer.src =
+      ROOT + "bezels/single-neck.png";
+
+  }
+
+  triggerFog();
+  updateSummary();
+
+}
+
 function updateSummary(){
 
 const config = MODELS[model.value];
@@ -1227,6 +1269,13 @@ Pickguard: ${pickguard}
 Price: $${config.price}`;
 
 }
+
+let bezels =
+  document.getElementById("bezelsToggle").checked
+    ? "Yes"
+    : "No";
+
+    Bezels: ${bezels}
 
 function resetBuilder(){
 location.reload();
@@ -1282,6 +1331,9 @@ model.value = "barbarian";
 
 model.onchange();
 
+document
+  .getElementById("bezelsToggle")
+  .addEventListener("change", updateBezels);
 
 
 </script>
