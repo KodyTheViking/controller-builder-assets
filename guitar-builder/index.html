@@ -592,7 +592,10 @@ const inlayColorContainer=document.getElementById("inlayColorSwatches");
 
 function updateHeadstock(){
 
-  let color = document.querySelector("#headstockColorSwatches .active")?.dataset.color || "black";
+  let color =
+    document.querySelector("#headstockColorSwatches .active")?.dataset.color
+    || "black";
+
   let type = headstockSelect.value || "bastard-sword";
 
   let folder = "headstocks";
@@ -607,6 +610,7 @@ function updateHeadstock(){
   );
 
   triggerFog();
+  updateSummary();
 }
   
 
