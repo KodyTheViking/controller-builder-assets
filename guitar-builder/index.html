@@ -51,6 +51,13 @@ flex-direction:column;
 gap:10px;
 }
 
+.info-column{
+  width:280px;
+  position:sticky;
+  top:20px;
+  align-self:flex-start;
+}
+
 /* PREVIEW */
 
 .preview{
@@ -345,50 +352,25 @@ width:100%;
 
 
 
-  <div class="container">
+<div class="container">
 
   <div class="left-column">
 
-<div class="preview">
-  <img id="bg" style="position:relative;">
-  <img id="base">
-  <img id="headstock">
-  <img id="inlays">
-  <img id="pickguard">
-  <img id="hardware">
-  <img id="bezels">
-  <img id="casketFog">
-  <img id="casketLid">
-
-</div>
-
-<!-- SOUND -->
-<audio id="casketSound" src="https://kodytheviking.github.io/controller-builder-assets/guitar-builder/casket/close.mp3"></audio>
-
-    <div class="builder-info">
-
-      <h3>How to Use the Builder</h3>
-
-      <p>
-      1. Pick your body shape and color.<br>
-      2. Pick a headstock shape and color.<br>
-      3. Pick from the available inlays and color them.<br>
-      4. Pick your accent detail. This will be pickguards or stripes. Some models don't offer anything here. <br>
-      5. Want a color that's not shown here? Leave your idea in the Notes field of your build submission and I will contact you if I need more information! <br>
-      6. When finished, fill in the form submission with your info and click <b>Send Build</b>.
-      </p>
-
-      <p>
-      <strong>Important:</strong> Use the same name and email when placing your order on the store so we can match your build configuration.
-      </p>
-
-      <p>
-      Colors shown in the builder are digital previews and may vary slightly from the final product.
-      </p>
-
+    <div class="preview">
+      <img id="bg" style="position:relative;">
+      <img id="base">
+      <img id="headstock">
+      <img id="inlays">
+      <img id="pickguard">
+      <img id="hardware">
+      <img id="bezels">
+      <img id="casketFog">
+      <img id="casketLid">
     </div>
 
-  </div> <!-- ✅ CLOSE LEFT COLUMN HERE -->
+  </div>
+
+  <audio id="casketSound" src="https://kodytheviking.github.io/controller-builder-assets/guitar-builder/casket/close.mp3"></audio>
 
   <div class="controls">
 
@@ -461,7 +443,32 @@ style="width:100%;padding:8px;margin-top:10px;height:80px;"></textarea>
     <button onclick="sendBuild()">Send Build</button>
 
   </div>
+<div class="info-column">
 
+  <div class="builder-info">
+
+    <h3>How to Use the Builder</h3>
+
+    <p>
+    1. Pick your body shape and color.<br>
+    2. Pick a headstock shape and color.<br>
+    3. Pick from the available inlays and color them.<br>
+    4. Pick your accent detail. This will be pickguards or stripes. Some models don't offer anything here.<br>
+    5. Want a color that's not shown here? Leave your idea in the Notes field of your build submission and I will contact you if I need more information!<br>
+    6. When finished, fill in the form submission with your info and click <b>Send Build</b>.
+    </p>
+
+    <p>
+      <strong>Important:</strong> Use the same name and email when placing your order on the store so we can match your build configuration.
+    </p>
+
+    <p>
+      Colors shown in the builder are digital previews and may vary slightly from the final product.
+    </p>
+
+  </div>
+
+</div>
 </div>
 
 <script>
