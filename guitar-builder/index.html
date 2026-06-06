@@ -310,13 +310,9 @@ color:#fff;
 
 @media (max-width:900px){
 
-body{
-  background:red !important;
-}
-
 .container{
   display:grid;
-  grid-template-columns:40% 60%;
+  grid-template-columns:48% 52%;
   gap:15px;
   align-items:start;
 }
@@ -338,6 +334,7 @@ body{
 }
 
 .controls{
+  font-size:14px;
   grid-column:2;
   grid-row:1 / span 2;
 
@@ -369,6 +366,18 @@ body{
   box-sizing:border-box;
 }
 
+.controls h1{
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+.controls h3{
+  font-size:12px;
+  margin-top:6px;
+  margin-bottom:3px;
+  padding-top:3px;
+}
+
 .controls h3{
   margin-top:8px;
   margin-bottom:4px;
@@ -376,20 +385,8 @@ body{
 }
 
 .swatch{
-  width:26px;
-  height:26px;
-}
-
-.left-column{
-  background:rgba(255,0,0,.2);
-}
-
-.controls{
-  background:rgba(0,255,0,.2);
-}
-
-.info-column{
-  background:rgba(0,0,255,.2);
+  width:22px;
+  height:22px;
 }
 
 #casketFog{
