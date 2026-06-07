@@ -1384,15 +1384,29 @@ emailjs.send(
   params
 )
 
-.then(()=>{
-  alert("Your build has been sent!");
+.then(() => {
+
+  return emailjs.send(
+    "service_qqo7ge9",
+    "template_jjeojdj",
+    params
+  );
+
 })
 
-.catch((error)=>{
-  console.log("EmailJS Error:",error);
+.then(() => {
+
+  alert("Your build has been sent!");
+
+})
+
+.catch((error) => {
+
+  console.log("EmailJS Error:", error);
   alert("Error sending build.");
+
 });
-  
+
 model.value = "barbarian";
 
 model.onchange();
