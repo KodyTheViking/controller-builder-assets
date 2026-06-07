@@ -475,36 +475,113 @@ style="width:100%;padding:8px;margin-top:10px;height:80px;"></textarea>
 
     <button onclick="sendBuild()">Send Build</button>
 
+  <div class="controls">
+
+```
+<h1>Custom Guitar Controller Builder</h1>
+
+<label>Controller Model</label>
+
+<select id="model">
+  <option value="artificer">Artificer</option>
+  <option value="barbarian">Barbarian</option>
+  <option value="bard">Bard</option>
+  <option value="doubleneck">Bard (Double Neck)</option>
+  <option value="blacksmith">Blacksmith</option>
+  <option value="cleric">Cleric</option>
+  <option value="necromancer">Necromancer</option>
+  <option value="paladin">Paladin</option>
+  <option value="ranger">Ranger</option>
+  <option value="rogue">Rogue</option>
+  <option value="sorcerer">Sorcerer</option>
+  <option value="wizard">Wizard</option>
+</select>
+
+<h3>Base Color</h3>
+<div id="baseSwatches" class="swatches"></div>
+
+<div id="headstockSection">
+  <h3>Headstock Type</h3>
+  <select id="headstockSelect"></select>
+
+  <h3>Headstock Color</h3>
+  <div id="headstockColorSwatches" class="swatches"></div>
+</div>
+
+<h3>Inlay Style</h3>
+<div id="inlayStyleSwatches" class="swatches"></div>
+
+<h3>Inlay Color</h3>
+<div id="inlayColorSwatches" class="swatches"></div>
+
+<h3>Accent Detail</h3>
+<div id="pickguardSwatches" class="swatches"></div>
+
+<h3>Options</h3>
+
+<label style="display:flex;align-items:center;gap:8px;">
+  <input type="checkbox" id="bezelsToggle">
+  Fret Button Bezels
+</label>
+
+<div class="price">
+  Total Price: <span id="price">$200</span>
+</div>
+
+<button onclick="resetBuilder()">Reset Build</button>
+
+<h3>Your Build</h3>
+
+<textarea id="summary" readonly></textarea>
+
+<h3>Submit Your Build</h3>
+
+<input id="customerName" placeholder="Your Name" style="width:100%;padding:8px;margin-top:5px;">
+<input id="customerEmail" placeholder="Your Email" style="width:100%;padding:8px;margin-top:5px;">
+
+<textarea id="customerNotes" placeholder="Additional notes (optional)"
+style="width:100%;padding:8px;margin-top:10px;height:80px;"></textarea>
+
+<button onclick="sendBuild()">Send Build</button>
+```
+
+</div>
+
+<div class="info-column">
+
   <div class="builder-info">
 
-    <h3>How to Use the Builder</h3>
+```
+<h3>How to Use the Builder</h3>
 
-    <p>
-    1. Pick your body shape and color.<br>
-    2. Pick a headstock shape and color.<br>
-    3. Pick from the available inlays and color them.<br>
-    4. Pick your accent detail. This will be pickguards or stripes. Some models don't offer anything here.<br>
-    5. Want a color that's not shown here? Leave your idea in the Notes field of your build submission and I will contact you if I need more information!<br>
-    6. When finished, fill in the form submission with your info and click <b>Send Build</b>.
-    </p>
+<p>
+1. Pick your body shape and color.<br>
+2. Pick a headstock shape and color.<br>
+3. Pick from the available inlays and color them.<br>
+4. Pick your accent detail. This will be pickguards or stripes. Some models don't offer anything here.<br>
+5. Want a color that's not shown here? Leave your idea in the Notes field of your build submission and I will contact you if I need more information!<br>
+6. When finished, fill in the form submission with your info and click <b>Send Build</b>.
+</p>
 
-    <p>
-      <strong>Important:</strong> Use the same name and email when placing your order on the store so we can match your build configuration.
-    </p>
+<p>
+  <strong>Important:</strong> Use the same name and email when placing your order on the store so we can match your build configuration.
+</p>
 
-    <p>
-      Colors shown in the builder are digital previews and may vary slightly from the final product.
-    </p>
+<p>
+  Colors shown in the builder are digital previews and may vary slightly from the final product.
+</p>
+```
 
   </div>
 
 </div>
 
-</div>
+</div> <!-- mobile-left -->
 
-</div>
+</div> <!-- container -->
 
 <script>
+
 
 if(window.emailjs){
 emailjs.init({
