@@ -498,11 +498,12 @@ color:#fff;
 
     <h3>Options</h3>
 
-<label style="display:flex;align-items:center;gap:8px;">
-  <label style="display:flex;align-items:center;gap:8px;">
+<label style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
   <input type="checkbox" id="leftyToggle">
   Lefty Flip
 </label>
+
+<label style="display:flex;align-items:center;gap:8px;">
   <input type="checkbox" id="bezelsToggle">
   Fret Button Bezels
 </label>
@@ -1299,6 +1300,7 @@ function updateLefty(){
 
   const layers = [
     baseLayer,
+    headstocklayer,
     inlaysLayer,
     pickguardLayer,
     hardwareLayer,
