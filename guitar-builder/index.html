@@ -477,6 +477,11 @@ color:#fff;
   <h3>Headstock Type</h3>
   <select id="headstockSelect"></select>
 
+  <label style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+  <input type="checkbox" id="reverseHeadstockToggle">
+  Reverse Headstock
+</label>
+
   <h3>Headstock Color</h3>
   <div id="headstockColorSwatches" class="swatches"></div>
 
@@ -494,6 +499,10 @@ color:#fff;
     <h3>Options</h3>
 
 <label style="display:flex;align-items:center;gap:8px;">
+  <label style="display:flex;align-items:center;gap:8px;">
+  <input type="checkbox" id="leftyToggle">
+  Lefty Flip
+</label>
   <input type="checkbox" id="bezelsToggle">
   Fret Button Bezels
 </label>
@@ -706,6 +715,8 @@ function updateHeadstock(){
     headstockLayer,
     ROOT + folder + "/" + type + "/" + color + ".png"
   );
+
+applyHeadstockTransform();
 
   triggerFog();
   updateSummary();
@@ -1296,6 +1307,34 @@ function updateBezels(){
 
   }
 
+function updateLefty(){
+
+  const enabled =
+    document.getElementById("leftyToggle").checked;
+
+  const layers = [
+    baseLayer,
+    inlaysLayer,
+    pickguardLayer,
+    hardwareLayer,
+    bezelsLayer,
+  ];
+
+  layers.forEach(layer=>{
+
+    layer.style.transform =
+      enabled
+        ? "scaleX(-1)"
+        : "scaleX(1)";
+
+  });
+
+    applyHeadstockTransform();
+    
+  updateSummary();
+
+}
+
   if(model.value === "doubleneck"){
 
     bezelsLayer.src =
@@ -1342,9 +1381,21 @@ let bezels =
     ? "Yes"
     : "No";
 
+let reverseHeadstock =
+  document.getElementById("reverseHeadstockToggle").checked
+    ? "Yes"
+    : "No";
+
+let lefty =
+  document.getElementById("leftyToggle").checked
+    ? "Yes"
+    : "No";
+
 document.getElementById("summary").value =
 `Model: ${modelName}
+Lefty Flip: ${lefty}
 Headstock: ${headstock}
+Reverse Headstock: ${reverseHeadstock}
 Base: ${baseColor}
 Inlays: ${style} (${color})
 Pickguard: ${pickguard}
@@ -1417,6 +1468,13 @@ document
   .getElementById("bezelsToggle")
   .addEventListener("change", updateBezels);
 
+document
+  .getElementById("reverseHeadstockToggle")
+  .addEventListener("change", updateHeadstock);
+
+document
+  .getElementById("leftyToggle")
+  .addEventListener("change", updateLefty);
 
 </script>
 
