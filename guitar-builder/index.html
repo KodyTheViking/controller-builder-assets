@@ -716,8 +716,6 @@ function updateHeadstock(){
     ROOT + folder + "/" + type + "/" + color + ".png"
   );
 
-applyHeadstockTransform();
-
   triggerFog();
   updateSummary();
 }
@@ -1294,19 +1292,6 @@ function buildPickguardSwatches(){
 
 }
 
-function updateBezels(){
-
-  const enabled =
-    document.getElementById("bezelsToggle").checked;
-
-  if(!enabled){
-
-    bezelsLayer.src = "";
-    updateSummary();
-    return;
-
-  }
-
 function updateLefty(){
 
   const enabled =
@@ -1328,12 +1313,23 @@ function updateLefty(){
         : "scaleX(1)";
 
   });
-
-    applyHeadstockTransform();
     
   updateSummary();
 
 }
+
+function updateBezels(){
+
+  const enabled =
+    document.getElementById("bezelsToggle").checked;
+
+  if(!enabled){
+
+    bezelsLayer.src = "";
+    updateSummary();
+    return;
+
+  }
 
   if(model.value === "doubleneck"){
 
@@ -1467,10 +1463,6 @@ model.onchange();
 document
   .getElementById("bezelsToggle")
   .addEventListener("change", updateBezels);
-
-document
-  .getElementById("reverseHeadstockToggle")
-  .addEventListener("change", updateHeadstock);
 
 document
   .getElementById("leftyToggle")
