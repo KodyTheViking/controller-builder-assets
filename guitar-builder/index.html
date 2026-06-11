@@ -1300,10 +1300,11 @@ function updateLefty(){
 
   const layers = [
     baseLayer,
+    headstockLayer,
     inlaysLayer,
     pickguardLayer,
     hardwareLayer,
-    bezelsLayer,
+    bezelsLayer
   ];
 
   layers.forEach(layer=>{
@@ -1311,15 +1312,10 @@ function updateLefty(){
     layer.style.transform =
       enabled
         ? "translateX(6px) scaleX(-1)"
-        : "translateX(0px) scaleX(1)";
+        : "";
 
   });
 
-  headstockLayer.style.transform =
-  enabled
-    ? "scaleX(-1)"
-    : "scaleX(1)";
-    
   updateSummary();
 
 }
