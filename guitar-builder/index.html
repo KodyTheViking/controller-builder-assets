@@ -582,6 +582,13 @@ const ALL_HEADSTOCKS=[
   "warhammer"
 ];
 
+const NON_REVERSIBLE_HEADSTOCKS = [
+  "great-axe",
+  "katar",
+  "maul",
+  "warhammer"
+];
+
 const MODELS={
 
 artificer:{folder:"artificer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
@@ -698,7 +705,30 @@ headstockSelect.addEventListener("change", () => {
   updateHeadstock();
 });
 
+function updateReverseOption(){
+
+  const wrapper =
+    document.getElementById("reverseHeadstockToggle").parentElement;
+
+  const headstock = headstockSelect.value;
+
+  const reversible =
+    !NON_REVERSIBLE_HEADSTOCKS.includes(headstock);
+
+  wrapper.style.display =
+    reversible ? "flex" : "none";
+
+  if(!reversible){
+
+    document.getElementById("reverseHeadstockToggle").checked = false;
+
+  }
+
+}
+
 function updateHeadstock(){
+
+  updateReverseOption();
 
   const color =
     document.querySelector("#headstockColorSwatches .active")?.dataset.color
@@ -723,7 +753,17 @@ function updateHeadstock(){
     folder = "double-neck headstocks";
   }
 
-  const filename = `${color}-${suffix}.png`;
+let filename;
+
+if(NON_REVERSIBLE_HEADSTOCKS.includes(type)){
+
+  filename = `${color}.png`;
+
+}else{
+
+  filename = `${color}-${suffix}.png`;
+
+}
 
   fadeSwap(
     headstockLayer,
