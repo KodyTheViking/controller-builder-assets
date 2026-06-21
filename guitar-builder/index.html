@@ -1358,7 +1358,6 @@ function updateLefty(){
 
   const layers = [
     baseLayer,
-    headstockLayer,
     inlaysLayer,
     pickguardLayer,
     hardwareLayer,
@@ -1374,6 +1373,8 @@ function updateLefty(){
 
   });
 
+  headstockLayer.style.transform = "";
+  
   updateHeadstock();
   updateSummary();
 
