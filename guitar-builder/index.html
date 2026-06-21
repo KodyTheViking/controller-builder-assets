@@ -700,25 +700,43 @@ headstockSelect.addEventListener("change", () => {
 
 function updateHeadstock(){
 
-  let color =
+  const color =
     document.querySelector("#headstockColorSwatches .active")?.dataset.color
     || "black";
 
-  let type = headstockSelect.value || "bastard-sword";
+  const type =
+    headstockSelect.value || "bastard-sword";
+
+  const orientation =
+    document.getElementById("leftyToggle").checked
+      ? "left-handed"
+      : "right-handed";
+
+  const suffix =
+    document.getElementById("reverseHeadstockToggle").checked
+      ? "r"
+      : "s";
 
   let folder = "headstocks";
 
-  if(model.value==="doubleneck"){
+  if(model.value === "doubleneck"){
     folder = "double-neck headstocks";
   }
 
+  const filename = `${color}-${suffix}.png`;
+
   fadeSwap(
     headstockLayer,
-    ROOT + folder + "/" + type + "/" + color + ".png"
+    ROOT +
+    folder + "/" +
+    orientation + "/" +
+    type + "/" +
+    filename
   );
 
   triggerFog();
   updateSummary();
+
 }
   
 
@@ -1316,6 +1334,7 @@ function updateLefty(){
 
   });
 
+  updateHeadstock();
   updateSummary();
 
 }
@@ -1470,6 +1489,9 @@ document
   .getElementById("leftyToggle")
   .addEventListener("change", updateLefty);
 
+document
+  .getElementById("reverseHeadstockToggle")
+  .addEventListener("change", updateHeadstock);
 </script>
 
 </body>
