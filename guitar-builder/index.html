@@ -1055,6 +1055,8 @@ if(config.headstocks){
 
   headstockSection.style.display="block";
 
+const previousHeadstock = headstockSelect.value;
+
   headstockSelect.innerHTML="";
 
   config.headstocks.forEach(h=>{
@@ -1071,7 +1073,11 @@ if(config.headstocks){
 
   });
 
-headstockSelect.selectedIndex = 0;
+if(config.headstocks.includes(previousHeadstock)){
+  headstockSelect.value = previousHeadstock;
+}else{
+  headstockSelect.selectedIndex = 0;
+}
 
 
 setTimeout(()=>{
