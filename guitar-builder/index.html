@@ -439,6 +439,7 @@ color:#fff;
       <img id="base">
       <img id="headstock">
       <img id="inlays">
+      <img id="bodyGraphics">
       <img id="pickguard">
       <img id="hardware">
       <img id="bezels">
@@ -495,6 +496,18 @@ color:#fff;
 
     <h3>Accent Detail</h3>
     <div id="pickguardSwatches" class="swatches"></div>
+
+    <h3>Body Graphics</h3>
+
+<label>Graphic Style</label>
+
+<select id="graphicsSelect">
+  <option value="none">None</option>
+</select>
+
+<h3>Graphic Color</h3>
+
+<div id="graphicsColorSwatches" class="swatches"></div>
 
     <h3>Options</h3>
 
@@ -636,6 +649,8 @@ wizard:"Wizard",
   
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink","cosmic"];
 
+const GRAPHIC_COLORS = COLORS;
+
 const PICKGUARD_COLORS=[
 "black","white","red","orange","yellow","green","blue","purple","pink","none"
 ];
@@ -663,6 +678,7 @@ const INLAYS=[
 const model=document.getElementById("model");
 const baseLayer=document.getElementById("base");
 const inlaysLayer=document.getElementById("inlays");
+const bodyGRaphicsLayer=document.getElementById("bodyGraphics");
 const pickguardLayer=document.getElementById("pickguard");
 const hardwareLayer=document.getElementById("hardware");
 const bezelsLayer=document.getElementById("bezels");
@@ -1079,6 +1095,21 @@ if(config.headstocks.includes(previousHeadstock)){
   headstockSelect.selectedIndex = 0;
 }
 
+graphicsSelect.innerHTML =
+  "<option value='none'>None</option>";
+
+(config.graphics || []).forEach(g=>{
+
+  let option =
+    document.createElement("option");
+
+  option.value = g;
+  option.textContent =
+    pretty(g);
+
+  graphicsSelect.appendChild(option);
+
+});
 
 setTimeout(()=>{
   updateHeadstock();
@@ -1202,6 +1233,42 @@ inlaysLayer.src=ROOT+folder+"/"+color+"/"+style+".png";
 triggerFog();
 
 updateSummary();
+
+}
+
+function updateGraphics(){
+
+  const graphic =
+    graphicsSelect.value;
+
+  if(graphic === "none"){
+
+    bodyGraphicsLayer.src = "";
+    updateSummary();
+    return;
+
+  }
+
+  const color =
+    document.querySelector(
+      "#graphicsColorSwatches .active"
+    )?.dataset.color || "black";
+
+  fadeSwap(
+
+    bodyGraphicsLayer,
+
+    ROOT +
+    model.value +
+    "/graphics/" +
+    graphic +
+    "/" +
+    color +
+    ".png"
+
+  );
+
+  updateSummary();
 
 }
 
@@ -1428,6 +1495,12 @@ let activePickguard = document.querySelector("#pickguardSwatches .active");
 let pickguardColor = activePickguard?.dataset.color || "none";
 let pickguardType = activePickguard?.dataset.type || "";
 
+let graphic = graphicsSelect.value;
+
+Body Graphics:
+${pretty(graphic)}
+(${graphicColor})
+
 function formatLabel(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -1523,6 +1596,16 @@ emailjs.send(
 });
 
 }
+
+graphicsSelect.addEventListener(
+  "change",
+  updateGraphics
+);
+
+graphicsColorSwatches.addEventListener(
+  "click",
+  updateGraphics
+);
 
 model.value = "barbarian";
 
