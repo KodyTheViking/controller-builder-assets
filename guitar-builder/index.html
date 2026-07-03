@@ -113,11 +113,12 @@ transform:translateX(3px);
 #headstock{z-index:2;}
 #base{z-index:3;}
 #inlays{z-index:4;}
-#pickguard{z-index:5;}
-#hardware{z-index:6;}
-#bezels{z-index:7;}
-#casketFog{z-index:8;}
-#casketLid{z-index:9;}
+#bodyGraphics{z-index:5;}
+#pickguard{z-index:6;}
+#hardware{z-index:7;}
+#bezels{z-index:8;}
+#casketFog{z-index:9;}
+#casketLid{z-index:10;}
 
 /* CONTROLS */
 
@@ -602,6 +603,16 @@ const NON_REVERSIBLE_HEADSTOCKS = [
   "warhammer"
 ];
 
+const ALL_GRAPHICS = [
+  "flames",
+  "lava-lamp",
+  "lightning",
+  "polka-dots",
+  "stone",
+  "tiger-stripes",
+  
+];
+
 const MODELS={
 
 artificer:{folder:"artificer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
@@ -678,7 +689,7 @@ const INLAYS=[
 const model=document.getElementById("model");
 const baseLayer=document.getElementById("base");
 const inlaysLayer=document.getElementById("inlays");
-const bodyGRaphicsLayer=document.getElementById("bodyGraphics");
+const bodyGraphicsLayer=document.getElementById("bodyGraphics");
 const pickguardLayer=document.getElementById("pickguard");
 const hardwareLayer=document.getElementById("hardware");
 const bezelsLayer=document.getElementById("bezels");
@@ -1496,10 +1507,9 @@ let pickguardColor = activePickguard?.dataset.color || "none";
 let pickguardType = activePickguard?.dataset.type || "";
 
 let graphic = graphicsSelect.value;
-
-Body Graphics:
-${pretty(graphic)}
-(${graphicColor})
+let graphicColor =
+  document.querySelector("#graphicsColorSwatches .active")?.dataset.color
+  || "black";
 
 function formatLabel(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -1535,6 +1545,7 @@ Headstock: ${headstock}
 Reverse Headstock: ${reverseHeadstock}
 Base: ${baseColor}
 Inlays: ${style} (${color})
+Body Graphics: ${pretty(graphic)} (${graphicColor})
 Pickguard: ${pickguard}
 Fret Button Bezels: ${bezels}
 Price: $${config.price}`;
