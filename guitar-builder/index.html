@@ -880,6 +880,44 @@ if(firstBase){ firstBase.classList.add("active"); }
 const firstHeadstock = document.querySelector("#headstockColorSwatches .swatch");
 if(firstHeadstock){ firstHeadstock.classList.add("active"); }
 
+const graphicsColorContainer =
+  document.getElementById("graphicsColorSwatches");
+
+GRAPHIC_COLORS.forEach(color=>{
+
+  let sw = document.createElement("div");
+
+  sw.className = "swatch";
+  sw.dataset.color = color;
+
+  if(color==="cosmic"){
+    sw.classList.add("rainbow");
+  }else{
+    sw.style.background = color;
+  }
+
+  sw.onclick = ()=>{
+
+    document
+      .querySelectorAll("#graphicsColorSwatches .swatch")
+      .forEach(s=>s.classList.remove("active"));
+
+    sw.classList.add("active");
+
+    updateGraphics();
+
+  };
+
+  graphicsColorContainer.appendChild(sw);
+
+});
+
+const firstGraphic =
+  document.querySelector("#graphicsColorSwatches .swatch");
+
+if(firstGraphic){
+  firstGraphic.classList.add("active");
+}
 
 INLAYS.forEach(style=>{
 
