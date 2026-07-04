@@ -1299,6 +1299,8 @@ updateSummary();
 
 function updateGraphics(){
 
+  const config = MODELS[model.value];
+
   const graphic =
     graphicsSelect.value;
 
@@ -1319,21 +1321,13 @@ function updateGraphics(){
 
     bodyGraphicsLayer,
 
-  const config = MODELS[model.value];
-
-fadeSwap(
-
-  bodyGraphicsLayer,
-
-  ROOT +
-  config.folder +
-  "/body-graphics/" +
-  graphic +
-  "/" +
-  color +
-  ".png"
-
-);
+    ROOT +
+    config.folder +
+    "/body-graphics/" +
+    graphic +
+    "/" +
+    color +
+    ".png"
 
   );
 
