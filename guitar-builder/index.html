@@ -1319,13 +1319,21 @@ function updateGraphics(){
 
     bodyGraphicsLayer,
 
-    ROOT +
-    model.value +
-    "/body-graphics/" +
-    graphic +
-    "/" +
-    color +
-    ".png"
+const config = MODELS[model.value];
+
+fadeSwap(
+
+  bodyGraphicsLayer,
+
+  ROOT +
+  config.folder +
+  "/body-graphics/" +
+  graphic +
+  "/" +
+  color +
+  ".png"
+
+);
 
   );
 
