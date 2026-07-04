@@ -615,29 +615,29 @@ const ALL_GRAPHICS = [
 
 const MODELS={
 
-artificer:{folder:"artificer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+artificer:{folder:"artificer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-barbarian:{folder:"barbarian",price:200,pickguard:false,headstocks:ALL_HEADSTOCKS},
+barbarian:{folder:"barbarian",price:200,pickguard:false,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-bard:{folder:"bard",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+bard:{folder:"bard",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-doubleneck:{folder:"double-neck",price:300,pickguard:true,headstocks:ALL_HEADSTOCKS},
+doubleneck:{folder:"double-neck",price:300,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-blacksmith:{folder:"blacksmith",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+blacksmith:{folder:"blacksmith",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-cleric:{folder:"cleric",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+cleric:{folder:"cleric",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-necromancer:{folder:"necromancer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+necromancer:{folder:"necromancer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-paladin:{folder:"paladin",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+paladin:{folder:"paladin",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-ranger:{folder:"ranger",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+ranger:{folder:"ranger",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-rogue:{folder:"rogue",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+rogue:{folder:"rogue",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-sorcerer:{folder:"sorcerer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+sorcerer:{folder:"sorcerer",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
-wizard:{folder:"wizard",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS},
+wizard:{folder:"wizard",price:200,pickguard:true,headstocks:ALL_HEADSTOCKS,graphics:ALL_GRAPHICS},
 
 };
 
@@ -1134,6 +1134,7 @@ setTimeout(()=>{
     updateInlays();
     buildPickguardSwatches();
     updateBezels();
+    updateGraphics();
 
   });
 
@@ -1271,7 +1272,7 @@ function updateGraphics(){
 
     ROOT +
     model.value +
-    "/graphics/" +
+    "/body-graphics/" +
     graphic +
     "/" +
     color +
