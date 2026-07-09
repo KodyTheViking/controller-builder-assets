@@ -675,7 +675,7 @@ function pretty(str){
   
 const COLORS=["black","white","red","orange","yellow","green","blue","purple","pink","cosmic"];
 
-const GRAPHIC_COLORS = COLORS;
+const GRAPHIC_COLORS = COLORS.filter(color => color !== "cosmic");
 
 const PICKGUARD_COLORS=[
 "black","white","red","orange","yellow","green","blue","purple","pink","none"
@@ -1312,6 +1312,7 @@ function updateGraphics(){
   if(graphic === "none"){
 
     bodyGraphicsLayer.src = "";
+    triggerFog();
     updateSummary();
     return;
 
